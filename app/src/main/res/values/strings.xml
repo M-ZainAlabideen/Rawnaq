@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Rawnaq</string>
+    <string name="navigation_drawer_open" translatable="false">drawer_open</string>
+    <string name="navigation_drawer_close" translatable="false">drawer_close</string>
+
+
+    <string name="recover_pass">recover Password</string>
+    <string name="send">Send</string>
+    <string name="phone">Phone</string>
+    <string name="code">Validation Code</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="code_sent">Validation Code Is Sent , Please Enter Code and New Password</string>
+    <string name="app_service">Rawnaq For Him and Her</string>
+    <string name="login">Login</string>
+    <string name="forget_pass">Forget Password</string>
+    <string name="without_register">Continue As a Guest</string>
+    <string name="sign_up">Create Account</string>
+    <string name="new_user">New User</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="user">User</string>
+    <string name="owner">Service Provider</string>
+    <string name="agree">Agree For Terms and Conditions</string>
+    <string name="test_serviceName">Save your Teeth</string>
+    <string name="test_serviceDesciption">Save and Care your Teeth from ......,etc</string>
+    <string name="advanced_search">Advanced Search</string>
+    <string name="closestToMe">Nearest</string>
+    <string name="rating">High Rate</string>
+    <string name="map">Map</string>
+    <string name="offers">Offers</string>
+    <string name="addToFav">Add To Favorites</string>
+    <string name="availableInHome">Available In Home</string>
+    <string name="test_serviceProviderName">Women Service</string>
+    <string name="test_serviceProviderAddress">Gada|near to gada Mall</string>
+    <string name="search">Search</string>
+    <string name="rating_service">Users Rating Of \\n Women Service</string>
+    <string name="rating2">Rating</string>
+    <string name="reserve_now">Order Now</string>
+    <string name="home_cost">50 RS Additional For Home Service</string>
+    <string name="contact_with">Contact With</string>
+    <string name="select_service">Select Service:</string>
+    <string name="select_address">Select Address:</string>
+    <string name="notes">Order Notes</string>
+    <string name="send_order">Order</string>
+    <string name="home_service">I Want Service In Home</string>
+    <string name="at_home">at Home</string>
+    <string name="canel_reservation">Cancel Order</string>
+    <string name="edit_reserve">Edit Order</string>
+    <string name="test_title">Address</string>
+    <string name="myAccount">My Account</string>
+    <string name="myOrders">My Orders</string>
+    <string name="favorites">Favorites</string>
+    <string name="aboutsUs">About Us</string>
+    <string name="terms">Terms and Conditions</string>
+    <string name="contactUs">Contact Us</string>
+    <string name="lang">عربي</string>
+    <string name="hello">Hello:</string>
+    <string name="logout">Logout</string>
+    <string name="test_price">300 RS</string>
+</resources>
