@@ -6,9 +6,9 @@
         <item name="colorPrimary">@color/blueLight</item>
         <item name="colorPrimaryDark">@color/blue</item>
         <item name="colorAccent">@color/blueLight</item>
-        <item name="android:textViewStyle">@style/appFont</item>
-        <item name="android:buttonStyle">@style/appFont</item>
-        <item name="editTextStyle">@style/appFont</item>
+        <!--<item name="android:textViewStyle">@style/appFont</item>-->
+        <!--<item name="android:buttonStyle">@style/appFont</item>-->
+        <!--<item name="editTextStyle">@style/appFont</item>-->
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowLightStatusBar">true</item>
         <!--<item name="checkboxStyle">@style/appFont</item>-->

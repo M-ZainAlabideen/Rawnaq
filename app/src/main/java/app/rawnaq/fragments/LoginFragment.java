@@ -59,7 +59,7 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.fragment_login_tv_forgetPass)
     public void forgetPassClick(){
-        //Navigator.loadFragment(activity, ForgetPass1Fragment.newInstance(activity), R.id.main_fl_container, false);
+        Navigator.loadFragment(activity, ForgetPass1Fragment.newInstance(activity), R.id.main_fl_container, false);
     }
 
     @OnClick(R.id.fragment_login_tv_guest)

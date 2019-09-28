@@ -22,6 +22,10 @@ import android.widget.TextView;
 import app.rawnaq.classes.LocaleHelper;
 import app.rawnaq.classes.Navigator;
 import app.rawnaq.classes.SessionManager;
+import app.rawnaq.fragments.AboutUsFragment;
+import app.rawnaq.fragments.ContactUsFragment;
+import app.rawnaq.fragments.FavoritesFragment;
+import app.rawnaq.fragments.ForgetPass2Fragment;
 import app.rawnaq.fragments.LoginFragment;
 import app.rawnaq.fragments.TermsFragment;
 import butterknife.BindView;
@@ -50,9 +54,6 @@ public class MainActivity extends AppCompatActivity {
     public static TextView accountOrLogin;
     public static ImageView menu;
 
-
-    //this variable is used to check the current selected language in the app
-    public static boolean isEnglish;
     private String language;
     SessionManager sessionManager;
 
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
         language = sessionManager.getUserLanguage();
-        if (language.equals(""))
+        if (!language.equals("en"))
             language = "ar";
         LocaleHelper.setLocale(this, language);
         sessionManager.setUserLanguage(language);
@@ -131,18 +132,21 @@ public class MainActivity extends AppCompatActivity {
     //aboutUs Click
     @OnClick(R.id.main_ll_aboutUs)
     public void aboutUsClick() {
+        Navigator.loadFragment(this, AboutUsFragment.newInstance(this), R.id.main_fl_container, false);
         drawerLayout.closeDrawers();
     }
 
     //aboutUs Click
     @OnClick(R.id.main_ll_contactUs)
     public void contactUsClick() {
+        Navigator.loadFragment(this, ContactUsFragment.newInstance(this),R.id.main_fl_container,false);
         drawerLayout.closeDrawers();
     }
 
     //aboutUs Click
     @OnClick(R.id.main_ll_favorites)
     public void favoritesClick() {
+        Navigator.loadFragment(this, FavoritesFragment.newInstance(this), R.id.main_fl_container, false);
         drawerLayout.closeDrawers();
     }
 
@@ -205,10 +209,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (language.equals("ar")) {
             language = "en";
-            isEnglish = true;
         } else if (language.equals("en")) {
             language = "ar";
-            isEnglish = false;
         }
 
         LocaleHelper.setLocale(this, language);

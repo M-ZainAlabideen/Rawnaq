@@ -82,7 +82,7 @@ public class SessionManager {
     }
 
     public String getUserLanguage() {
-        return sharedPref.getString(LANGUAGE_CODE, "");
+        return sharedPref.getString(LANGUAGE_CODE, "ar");
     }
 
     public void ContinueAsGuest() {
