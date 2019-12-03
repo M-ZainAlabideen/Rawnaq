@@ -12,26 +12,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import app.rawnaq.MainActivity;
 import app.rawnaq.R;
 import app.rawnaq.adapters.ServicesAdapter;
-import app.rawnaq.classes.Navigator;
 import app.rawnaq.classes.SessionManager;
-import app.rawnaq.models.ServicesModel;
+import app.rawnaq.webservices.responses.categories.Service;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class ServicesFragment extends Fragment {
     public static FragmentActivity activity;
     public static ServicesFragment fragment;
     public static SessionManager sessionManager;
-    public static Map<String, String> User;
     public ServicesAdapter servicesAdapter;
     public LinearLayoutManager layoutManager;
-    public ArrayList<ServicesModel> servicesList = new ArrayList<>();
+    public ArrayList<Service> servicesList = new ArrayList<>();
 
     @BindView(R.id.fragment_services_rv_services)
     RecyclerView services;
@@ -40,7 +36,6 @@ public class ServicesFragment extends Fragment {
         fragment = new ServicesFragment();
         ServicesFragment.activity = activity;
         sessionManager = new SessionManager(activity);
-        User = sessionManager.getUser();
         return fragment;
     }
 
@@ -56,13 +51,9 @@ public class ServicesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.VISIBLE);
+        MainActivity.title.setText(getString(R.string.services));
 
-        servicesList.add(new ServicesModel());
-        servicesList.add(new ServicesModel());
-        servicesList.add(new ServicesModel());
-        servicesList.add(new ServicesModel());
-        servicesList.add(new ServicesModel());
-
+        servicesList.addAll((ArrayList<Service>)getArguments().getSerializable("services"));
         layoutManager = new LinearLayoutManager(activity);
         servicesAdapter = new ServicesAdapter(activity,servicesList);
         services.setLayoutManager(layoutManager);

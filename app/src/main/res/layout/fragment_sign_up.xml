@@ -39,7 +39,7 @@
         app:srcCompat="@mipmap/rawnaq_logo" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/fragment_sign_up_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -100,7 +100,7 @@
             android:background="@drawable/curved_corners_blue"
             android:gravity="center"
             android:padding="3dp"
-            android:text="@string/login"
+            android:text="@string/sign_up"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -123,7 +123,7 @@
         android:paddingEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_sign_up_tv_title" />
 
     <EditText
         android:id="@+id/fragment_sign_up_et_password"
@@ -205,7 +205,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/fragment_sign_up_iv_bottomBg"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="32dp"
@@ -218,15 +218,15 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <View
-            android:id="@+id/textView4"
+            android:id="@+id/fragment_sign_up_tv_title4"
             android:layout_width="2dp"
             android:layout_height="25dp"
             android:layout_marginStart="8dp"
             android:background="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-            app:layout_constraintEnd_toEndOf="@+id/imageView4"
-            app:layout_constraintStart_toStartOf="@+id/imageView4"
-            app:layout_constraintTop_toTopOf="@+id/imageView4" />
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_sign_up_iv_bottomBg"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_sign_up_iv_bottomBg"
+            app:layout_constraintStart_toStartOf="@+id/fragment_sign_up_iv_bottomBg"
+            app:layout_constraintTop_toTopOf="@+id/fragment_sign_up_iv_bottomBg" />
 
         <TextView
             android:id="@+id/fragment_sign_up_tv_login"
@@ -236,10 +236,10 @@
             android:layout_marginEnd="8dp"
             android:text="@string/login"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/textView4"
-            app:layout_constraintEnd_toStartOf="@+id/textView4"
-            app:layout_constraintStart_toStartOf="@+id/imageView4"
-            app:layout_constraintTop_toTopOf="@+id/textView4"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_sign_up_tv_title4"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_sign_up_tv_title4"
+            app:layout_constraintStart_toStartOf="@+id/fragment_sign_up_iv_bottomBg"
+            app:layout_constraintTop_toTopOf="@+id/fragment_sign_up_tv_title4"
             app:layout_constraintVertical_bias="0.692" />
 
         <TextView
@@ -250,10 +250,26 @@
             android:layout_marginEnd="8dp"
             android:text="@string/without_register"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/textView4"
-            app:layout_constraintEnd_toEndOf="@+id/imageView4"
-            app:layout_constraintStart_toEndOf="@+id/textView4"
-            app:layout_constraintTop_toTopOf="@+id/textView4" />
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_sign_up_tv_title4"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_sign_up_iv_bottomBg"
+            app:layout_constraintStart_toEndOf="@+id/fragment_sign_up_tv_title4"
+            app:layout_constraintTop_toTopOf="@+id/fragment_sign_up_tv_title4" />
 
+
+        <ProgressBar
+            android:id="@+id/loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:indeterminateTint="@color/colorPrimary"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

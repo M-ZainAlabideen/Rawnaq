@@ -6,37 +6,44 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import app.rawnaq.R;
-import app.rawnaq.models.SubServicesModel;
+import app.rawnaq.webservices.responses.providers.ProviderService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SubServicesAdapter extends RecyclerView.Adapter<SubServicesAdapter.viewHolder> {
 
-        Context context;
-        ArrayList<SubServicesModel> subServicesList;
+    Context context;
+    ArrayList<ProviderService> subServicesList;
+    boolean isOrder;
+    public static ArrayList<Integer> subServicesIds = new ArrayList<>();
 
-public SubServicesAdapter(Context context, ArrayList<SubServicesModel> subServicesList) {
+    public SubServicesAdapter(Context context, ArrayList<ProviderService> subServicesList, boolean isOrder) {
         this.context = context;
         this.subServicesList = subServicesList;
-        }
-
-public class viewHolder extends RecyclerView.ViewHolder {
-
-    @BindView(R.id.item_sub_service_name)
-    TextView name;
-    @BindView(R.id.item_sub_service_price)
-    TextView price;
-
-    public viewHolder(@NonNull View itemView) {
-        super(itemView);
-        ButterKnife.bind(this, itemView);
+        this.isOrder = isOrder;
     }
-}
+
+    public class viewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.item_sub_service_cb_name)
+        CheckBox name;
+        @BindView(R.id.item_sub_service_tv_price)
+        TextView price;
+
+        public viewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
 
     @NonNull
     @Override
@@ -47,8 +54,26 @@ public class viewHolder extends RecyclerView.ViewHolder {
 
     @Override
     public void onBindViewHolder(@NonNull SubServicesAdapter.viewHolder viewHolder, final int position) {
-               // viewHolder.name.setText(subServicesList.get(position).name);
-               // viewHolder.price.setText(subServicesList.get(position).price);
+        if (isOrder) {
+            viewHolder.name.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        subServicesIds.add(subServicesList.get(position).id);
+                    } else {
+                        subServicesIds.remove(subServicesList.get(position).id);
+                    }
+                }
+            });
+        } else {
+            viewHolder.name.setButtonDrawable(null);
+            viewHolder.name.setClickable(false);
+        }
+
+        viewHolder.name.setText(subServicesList.get(position).service.name);
+        viewHolder.price.setText(String.valueOf(subServicesList.get(position).price + " " + context.getString(R.string.currency)));
+
+
     }
 
     @Override

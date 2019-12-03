@@ -2,7 +2,6 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -12,33 +11,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/fragment_add_service_cl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/textView39"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
-            android:text="TextView"
+            android:text="@string/mainCategory"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/fragment_add_service_spin_mainCategory"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="18dp"
+            android:paddingStart="32dp"
             android:background="@drawable/bg_spinner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView39"
             app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
         <Spinner
-            android:id="@+id/spinner2"
+            android:id="@+id/fragment_add_service_spin_serviceName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="18dp"
+            android:paddingStart="32dp"
             android:background="@drawable/bg_spinner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView40"
@@ -49,9 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
-            android:text="TextView"
-            app:layout_constraintStart_toStartOf="@+id/spinner"
-            app:layout_constraintTop_toBottomOf="@+id/spinner" />
+            android:text="@string/serviceName"
+            app:layout_constraintStart_toStartOf="@+id/fragment_add_service_spin_mainCategory"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_service_spin_mainCategory" />
 
         <TextView
             android:id="@+id/textView41"
@@ -59,114 +65,120 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
             android:text="@string/serviceFor"
-            app:layout_constraintStart_toStartOf="@+id/spinner2"
-            app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+            app:layout_constraintStart_toStartOf="@+id/fragment_add_service_spin_serviceName"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_service_spin_serviceName" />
 
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:id="@+id/fragment_add_service_rg_serviceFor"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/men"
-            android:gravity="center"
-            android:padding="6dp"
-            android:button="@drawable/radio_selector"
-            app:layout_constraintStart_toStartOf="@+id/textView41"
-            app:layout_constraintTop_toBottomOf="@+id/textView41" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/women"
-            android:gravity="center"
-            android:padding="6dp"
-            android:button="@drawable/radio_selector"
-            app:layout_constraintBottom_toBottomOf="@+id/radioButton"
-            app:layout_constraintEnd_toStartOf="@+id/radioButton3"
-            app:layout_constraintStart_toEndOf="@+id/radioButton"
-            app:layout_constraintTop_toTopOf="@+id/radioButton" />
-
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="18dp"
-            android:text="@string/all"
-            android:gravity="center"
-            android:padding="6dp"
-            android:button="@drawable/radio_selector"
-            app:layout_constraintBottom_toBottomOf="@+id/radioButton2"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/radioButton2" />
+            app:layout_constraintStart_toStartOf="@+id/textView41"
+            app:layout_constraintTop_toBottomOf="@+id/textView41">
+
+            <RadioButton
+                android:id="@+id/fragment_add_service_rb_forMen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/radio_selector"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="@string/men" />
+
+            <RadioButton
+                android:id="@+id/fragment_add_service_rb_forWomen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="8dp"
+                android:button="@drawable/radio_selector"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="@string/women" />
+
+            <RadioButton
+                android:id="@+id/fragment_add_service_rb_forAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:button="@drawable/radio_selector"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="@string/all" />
+
+
+        </RadioGroup>
 
         <EditText
-            android:id="@+id/editText10"
-            android:layout_width="wrap_content"
+            android:id="@+id/fragment_add_service_et_serviceCost"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
-            android:ems="10"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:hint="@string/servicePrice"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/curved_corners_with_stroke"
+            android:ems="10"
+            android:hint="@string/servicePrice"
             android:inputType="number"
-            app:layout_constraintStart_toStartOf="@+id/radioButton"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton" />
+            android:padding="6dp"
+            app:layout_constraintEnd_toStartOf="@+id/textView42"
+            app:layout_constraintStart_toStartOf="@+id/fragment_add_service_rg_serviceFor"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_service_rg_serviceFor" />
 
         <TextView
             android:id="@+id/textView42"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/currency"
             android:textColor="@color/blueLight"
-            app:layout_constraintBottom_toBottomOf="@+id/editText10"
-            app:layout_constraintStart_toEndOf="@+id/editText10"
-            app:layout_constraintTop_toTopOf="@+id/editText10" />
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_add_service_et_serviceCost"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fragment_add_service_et_serviceCost" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/fragment_add_service_cb_specialOffer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="35dp"
             android:gravity="center"
             android:padding="6dp"
-            android:button="@drawable/checkbox_selector"
+            android:button="@drawable/checkbox_white_selector"
+            android:buttonTint="@color/gray"
             android:text="@string/special_offer"
-            app:layout_constraintStart_toStartOf="@+id/editText10"
-            app:layout_constraintTop_toBottomOf="@+id/editText10" />
+            app:layout_constraintStart_toStartOf="@+id/fragment_add_service_et_serviceCost"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_service_et_serviceCost" />
 
         <EditText
-            android:id="@+id/editText11"
-            android:layout_width="wrap_content"
+            android:id="@+id/fragment_add_service_et_serviceCostWithOffer"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/curved_corners_with_stroke"
             android:ems="10"
             android:hint="@string/offerPrice"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:inputType="number"
-            android:background="@drawable/curved_corners_with_stroke"
-            app:layout_constraintStart_toStartOf="@+id/checkBox"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+            android:padding="6dp"
+            app:layout_constraintEnd_toStartOf="@+id/textView43"
+            app:layout_constraintStart_toStartOf="@+id/fragment_add_service_cb_specialOffer"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_service_cb_specialOffer" />
 
         <TextView
             android:id="@+id/textView43"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/currency"
             android:textColor="@color/blueLight"
-            app:layout_constraintBottom_toBottomOf="@+id/editText11"
-            app:layout_constraintStart_toEndOf="@+id/editText11"
-            app:layout_constraintTop_toTopOf="@+id/editText11" />
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_add_service_et_serviceCostWithOffer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fragment_add_service_et_serviceCostWithOffer" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/fragment_add_service_btn_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -179,7 +191,23 @@
             android:background="@mipmap/bg_reservation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText11" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_add_service_et_serviceCostWithOffer" />
+    </android.support.constraint.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:indeterminateTint="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

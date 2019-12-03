@@ -20,4 +20,14 @@
 <item name="android:fontFamily">@font/droid_kufi_regular</item>
 </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/gray</item>
+        <item name="colorControlActivated">@color/golden</item>
+    </style>
+
+    <style name="FragmentTitle">
+        <item name="android:textSize">25sp</item>
+        <!--<item name="android:fontFamily">@font/segoe_ui_bold</item>-->
+    </style>
+
 </resources>

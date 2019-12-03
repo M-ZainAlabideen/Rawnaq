@@ -10,4 +10,8 @@
     <color name="black">#000000</color>
     <color name="gray">#A1A1A1</color>
     <color name="orange">#E67315</color>
+    <color name="golden">#FFD700</color>
+    <color name="grayLight">#F7F7F7</color>
+    <color name="red">#B05051</color>
+
 </resources>

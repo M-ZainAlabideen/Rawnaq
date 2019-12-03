@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import java.util.regex.Pattern;
+
 public class FixControl {
     public static int getImageHeight(Context context, int resId){
 
@@ -21,5 +23,14 @@ public class FixControl {
         Bitmap mBitmap = BitmapFactory.decodeResource(context.getResources(), resId, dimensions);
         return dimensions.outWidth;
 
+    }
+
+    public final static  boolean isValidEmail(String email){
+        if(email==null){
+            return false;
+        }
+        else {
+            return Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$").matcher(email).matches();
+        }
     }
 }

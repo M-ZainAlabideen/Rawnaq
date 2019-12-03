@@ -20,18 +20,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/main_tv_userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/hello"
         android:textColor="@color/blue"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/main_iv_profilePic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/main_iv_profilePic"
         app:layout_constraintTop_toTopOf="@+id/main_iv_profilePic" />
-
 
     <View
         android:id="@+id/view5"
@@ -46,87 +49,204 @@
         app:layout_constraintTop_toBottomOf="@+id/main_iv_profilePic" />
 
     <LinearLayout
-        android:id="@+id/main_ll_accountOrLogin"
-        android:layout_width="wrap_content"
+        android:id="@+id/main_ll_userContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="@+id/main_iv_profilePic"
         app:layout_constraintTop_toBottomOf="@+id/view5">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            app:srcCompat="@mipmap/ic_profile" />
-
-        <TextView
-            android:id="@+id/main_tv_accountOrLogin"
+        <LinearLayout
+            android:id="@+id/main_ll_accountOrLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="28dp"
-            android:text="@string/myAccount"
-            android:textColor="@color/blue"
-            android:textSize="16sp" />
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@mipmap/ic_profile" />
+
+            <TextView
+                android:id="@+id/main_tv_accountOrLoginTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="28dp"
+                android:text="@string/myAccount"
+                android:textColor="@color/blue"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_ll_myOrders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@mipmap/ic_my_orders" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="28dp"
+                android:text="@string/myOrders"
+                android:textColor="@color/blue"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_ll_favorites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@mipmap/ic_favorites_side_menu" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="28dp"
+                android:text="@string/favorites"
+                android:textColor="@color/blue"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
+
 
     <LinearLayout
-        android:id="@+id/main_ll_myOrders"
-        android:layout_width="wrap_content"
+        android:id="@+id/main_ll_providerContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@+id/main_ll_accountOrLogin"
-        app:layout_constraintTop_toBottomOf="@+id/main_ll_accountOrLogin">
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@+id/main_ll_userContainer"
+        app:layout_constraintTop_toBottomOf="@+id/main_ll_userContainer">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            app:srcCompat="@mipmap/ic_my_orders" />
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/main_ll_providerAccountOrLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="28dp"
-            android:text="@string/myOrders"
-            android:textColor="@color/blue"
-            android:textSize="16sp" />
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@mipmap/ic_profile" />
+
+            <TextView
+                android:id="@+id/main_tv_providerAccountOrLoginTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="28dp"
+                android:text="@string/myAccount"
+                android:textColor="@color/blue"
+                android:textSize="16sp" />
 
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/main_ll_favorites"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@+id/main_ll_myOrders"
-        app:layout_constraintTop_toBottomOf="@+id/main_ll_myOrders">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            app:srcCompat="@mipmap/ic_favorites" />
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/main_ll_providerOrders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="28dp"
-            android:text="@string/favorites"
-            android:textColor="@color/blue"
-            android:textSize="16sp" />
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@mipmap/ic_my_orders" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="28dp"
+                android:text="@string/ordersHistory"
+                android:textColor="@color/blue"
+                android:textSize="16sp" />
 
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_ll_myServices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@mipmap/ic_left_arrow" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="28dp"
+                android:text="@string/myServices"
+                android:textColor="@color/blue"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/main_ll_providerPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@mipmap/ic_left_arrow" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="28dp"
+                android:text="@string/myPage"
+                android:textColor="@color/blue"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
     </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/main_ll_aboutUs"
@@ -135,8 +255,8 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@+id/main_ll_favorites"
-        app:layout_constraintTop_toBottomOf="@+id/main_ll_favorites">
+        app:layout_constraintStart_toStartOf="@+id/main_ll_providerContainer"
+        app:layout_constraintTop_toBottomOf="@+id/main_ll_providerContainer">
 
         <ImageView
             android:layout_width="match_parent"

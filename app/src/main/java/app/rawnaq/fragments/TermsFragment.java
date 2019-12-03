@@ -8,13 +8,16 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.Map;
 
 import app.rawnaq.MainActivity;
 import app.rawnaq.R;
+import app.rawnaq.classes.GlobalFunctions;
 import app.rawnaq.classes.Navigator;
 import app.rawnaq.classes.SessionManager;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -22,14 +25,14 @@ public class TermsFragment extends Fragment {
     public static FragmentActivity activity;
     public static TermsFragment fragment;
 
-    public static SessionManager sessionManager;
-    public static Map<String, String> User;
+    @BindView(R.id.fragment_terms_tv_policyUser)
+    TextView policyUser;
+    @BindView(R.id.fragment_terms_tv_policyProvider)
+    TextView policyProvider;
 
     public static TermsFragment newInstance(FragmentActivity activity) {
         fragment = new TermsFragment();
         TermsFragment.activity = activity;
-        sessionManager = new SessionManager(activity);
-        User = sessionManager.getUser();
         return fragment;
     }
 
@@ -45,6 +48,10 @@ public class TermsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.VISIBLE);
+        MainActivity.title.setText(getString(R.string.terms));
+
+        policyUser.setText(GlobalFunctions.policy_user);
+        policyProvider.setText(GlobalFunctions.policy_provider);
     }
     
 

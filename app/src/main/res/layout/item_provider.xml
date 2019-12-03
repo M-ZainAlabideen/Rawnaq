@@ -7,84 +7,98 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
+    <ImageView
+        android:id="@+id/item_provider_iv_image"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/placeholder_service_provider" />
+
     <TextView
-        android:id="@+id/item_favorite_tv_name"
+        android:id="@+id/item_provider_tv_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:textColor="@color/black"
+        android:layout_marginTop="8dp"
         android:text="@string/test_serviceProviderName"
-        app:layout_constraintEnd_toStartOf="@+id/item_favorite_rb_rating"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/item_provider_rb_rating"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/item_provider_iv_image" />
 
     <TextView
-        android:id="@+id/item_favorite_tv_address"
+        android:id="@+id/item_provider_tv_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/test_serviceProviderAddress"
         app:layout_constraintBottom_toBottomOf="@+id/imageView32"
+        app:layout_constraintEnd_toStartOf="@+id/item_provider_iv_addToFav"
         app:layout_constraintStart_toEndOf="@+id/imageView32"
         app:layout_constraintTop_toTopOf="@+id/imageView32" />
 
     <TextView
-        android:id="@+id/item_favorite_tv_availableInHomeTV"
+        android:id="@+id/item_provider_iv_workFromHomeTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/workFromHome"
-        app:layout_constraintBottom_toBottomOf="@+id/item_favorite_iv_availableInHome"
-        app:layout_constraintStart_toEndOf="@+id/item_favorite_iv_availableInHome"
-        app:layout_constraintTop_toTopOf="@+id/item_favorite_iv_availableInHome" />
+        app:layout_constraintBottom_toBottomOf="@+id/item_provider_iv_workFromHome"
+        app:layout_constraintStart_toEndOf="@+id/item_provider_iv_workFromHome"
+        app:layout_constraintTop_toTopOf="@+id/item_provider_iv_workFromHome" />
 
     <ImageView
         android:id="@+id/imageView32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        app:layout_constraintStart_toStartOf="@+id/item_favorite_tv_name"
-        app:layout_constraintTop_toBottomOf="@+id/item_favorite_tv_name"
+        app:layout_constraintStart_toStartOf="@+id/item_provider_tv_name"
+        app:layout_constraintTop_toBottomOf="@+id/item_provider_tv_name"
         app:srcCompat="@mipmap/ic_location" />
 
     <ImageView
-        android:id="@+id/item_favorite_iv_addToFav"
+        android:id="@+id/item_provider_iv_addToFav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="84dp"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_provider_iv_image"
         app:srcCompat="@mipmap/ic_un_fav" />
 
     <ImageView
-        android:id="@+id/item_favorite_iv_availableInHome"
+        android:id="@+id/item_provider_iv_workFromHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@+id/item_favorite_iv_addToFav"
-        app:layout_constraintStart_toStartOf="@+id/item_favorite_iv_addToFav"
-        app:layout_constraintTop_toBottomOf="@+id/item_favorite_iv_addToFav"
+        app:layout_constraintEnd_toEndOf="@+id/item_provider_iv_addToFav"
+        app:layout_constraintStart_toStartOf="@+id/item_provider_iv_addToFav"
+        app:layout_constraintTop_toBottomOf="@+id/item_provider_iv_addToFav"
         app:srcCompat="@mipmap/ic_check" />
 
     <RatingBar
-        android:id="@+id/item_favorite_rb_rating"
+        android:id="@+id/item_provider_rb_rating"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
         android:theme="@style/RatingBar"
-        app:layout_constraintEnd_toStartOf="@+id/item_favorite_iv_addToFav"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/item_provider_iv_addToFav"
+        app:layout_constraintTop_toBottomOf="@+id/item_provider_iv_image" />
 
     <View
+        android:id="@+id/view7"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:background="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_favorite_iv_availableInHome" />
+        app:layout_constraintTop_toBottomOf="@+id/item_provider_tv_address" />
 </android.support.constraint.ConstraintLayout>

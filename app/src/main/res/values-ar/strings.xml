@@ -24,17 +24,17 @@
     <string name="map">الخريطة</string>
     <string name="agree">أوافق علي سياسة الإستخدام</string>
     <string name="test_serviceName">العناية بأسنان</string>
-    <string name="test_serviceDesciption">العناية بالأسنان و صحتهاو كل ما يخص صحة الأسنان</string>
+    <string name="test_serviceDescription">العناية بالأسنان و صحتهاو كل ما يخص صحة الأسنان</string>
     <string name="advanced_search">بحث متقدم</string>
     <string name="closestToMe">الأقرب لي</string>
     <string name="rating">الأعلي تقييما</string>
     <string name="offers">العروض</string>
     <string name="addToFav">إضافة للمفضلة</string>
-    <string name="availableInHome">متاح في المنزل</string>
+    <string name="workFromHome">متاح في المنزل</string>
     <string name="test_serviceProviderName">كوافير حريمي</string>
     <string name="test_serviceProviderAddress">جدة بجوار مول جدة الرئيسي</string>
     <string name="search">بحث</string>
-    <string name="rating_service">تقييمات وأراء مستخدمي\n</string>
+    <string name="rating_of">تقييمات مستخدمي</string>
     <string name="rating2">تقييم ورأي</string>
     <string name="reserve_now">احجز موعدالآن</string>
     <string name="home_cost">يضاف مبلغ ٥٠ ريال إضافي مقابل تقديم الخدمة في المنزل</string>
@@ -71,4 +71,108 @@
     <string name="serviceFor">تقدم الخدمة لل</string>
     <string name="servicePrice">سعر الخدمة</string>
     <string name="offerPrice">السعر في العرض</string>
+    <string name="selectType">قم بإختيار نوع الحساب أولا</string>
+    <string name="enterName">قم بإدخال الإسم</string>
+    <string name="enterPhone">قم بإدخال رقم الجوال</string>
+    <string name="enterEmail">قم بإدخال البريد الإلكتروني</string>
+    <string name="enterPassword">قم بإدخال كلمة المرور</string>
+    <string name="enterPasswordAgain">قم بتأكيد كلمة المرور</string>
+    <string name="passwordNotMatched">كلمة المرو غير متطابقة</string>
+    <string name="agreeForTerms">قم بالموافقة علي الشروط والأحكام أولا</string>
+    <string name="error">حدث خطأ ما يرجي المحاولة في وقت لاحق</string>
+    <string name="unValidMail">البريد الإلكتروني غير صحيح</string>
+    <string name="passwordMinLength">كلمة المرور يجب أن لا تقل عن 6 أحرف</string>
+    <string name="nameMinLength">إسم المستخدم يجب أن لا يقل عن 3 أحرف</string>
+    <string name="emailExisted">البريد الإلكتروني مسجل من قبل</string>
+    <string name="phoneExisted">رقم الهاتف مسجل من قبل</string>
+    <string name="createdSuccessfully">تم إنشاء حسابك بنجاح</string>
+    <string name="unRegisterPhone">رقم الهاتف الذي أدخلته غير صحيح</string>
+    <string name="inCorrectPassword">كلمة المرور التي أدخلتها غير صحيحة</string>
+    <string name="noCategories">لا يوجد أقسام متاحة لعرضها</string>
+    <string name="noServices">لا يوجد خدمات متاحة لعرضها</string>
+    <string name="wrongPhone">رقم الهاتف الذي ادخلته غير صحيح</string>
+    <string name="passwordChanged">تم تغيير كلمة المرور بنجاح</string>
+    <string name="enterCode">قم بإدخال كود التحقق</string>
+    <string name="enterConfirmPassword">قم بتكرار كلمة المرور</string>
+    <string name="wrongCode">كود التحقق غير صحيح</string>
+    <string name="noProviders">لا يوجد مقدمين لهذه الخدمة في الوقت الحالي</string>
+    <string name="selectCountry">اختر الدولة</string>
+    <string name="selectCity">اختر المدينة</string>
+    <string name="selectZone">اختر الحي</string>
+    <string name="fifty">٥٠</string>
+    <string name="selectService">من فضلك قم بإختيار الخدمات التي تريدها</string>
+    <string name="addYouAddress">قم بإضافة عنوانك والتفاصيل الخاصة بك</string>
+    <string name="addYouDetails">برجاء كتابة العنوان بالتفصيل في حالة إختيار تقديم الخدمة بالمنزل كما أننا سوف نقوم بتحديد موقعك عن طريق خاصية ال جي بي إس  كما يرجي كتابة التوقيت المناسب لك او اي معلومات اخري او إستفسار</string>
+    <string name="cancelOrder">إلغاء الحجز</string>
+    <string name="editOrder">تعديل الحجز</string>
+    <string name="currentOrdersTitle">طلباتي الحالية</string>
+    <string name="previousOrdersTitle">طلباتي السابقة</string>
+    <string name="noOrders">لا يوجد طلبات لعرضها</string>
+    <string name="shopName">الإسم التجاري لمقدم الخدمة</string>
+    <string name="phoneForContact">جوال أو هاتف التواصل معك</string>
+    <string name="brief">نبذة عن مقدم الخدمة</string>
+    <string name="addImages">اضف صور</string>
+    <string name="streetName">إسم الشارع</string>
+    <string name="workHours">ساعات العمل</string>
+    <string name="enterHomeCost">ادخل السعر المضاف لسعر الخدمة في المنزل</string>
+    <string name="saveYourData">سوف نقوم بحفظ موقعك بإستخدام خاصية الجي بي إس بهاتفك لعرضها للمستخدمين علي الخريطة</string>
+    <string name="saveMainData">حفظ البيانات الأساسية</string>
+    <string name="mainCategory">التصنيف الرئيسي</string>
+    <string name="serviceName">إسم الخدمة</string>
+    <string name="serviceAdded">تم إضافة الخدمة بنجاح</string>
+    <string name="enterServiceCost">قم بإضافة تكلفة الخدمة</string>
+    <string name="selectServiceSegment">قم بإختيار شريحة المستخدمين</string>
+    <string name="enterServiceCostWithOffer">قم بإدخال سعر الخدمة داخل العرض</string>
+    <string name="homeText">الصفحة الرئيسية</string>
+    <string name="addYourShop">اضف المتجر أو مركز التجميل الخاص بك</string>
+    <string name="enterShopName">قم بإدخال إسم المتجر</string>
+    <string name="enterBrief">قم بإدخال الوصف</string>
+    <string name="enterStreetName">قم بإدخال إسم الشارع</string>
+    <string name="myServices">خدماتي</string>
+    <string name="myPage">صفحتي كما يرأها الآخرون</string>
+    <string name="ordersHistory">سجل الطلبات</string>
+    <string name="acceptOrder">قبول الطلب</string>
+    <string name="addService">إضافة خدمة جديدة</string>
+    <string name="edit">تعديل</string>
+    <string name="delete">حذف</string>
+    <string name="addShopFirst">قم بإضافة المتجر أو مركز التجميل الخاص بك أولا</string>
+    <string name="thanks">شكرا لتواصلك معنا , سوف يتم الرد عليك في أقرب فرصة</string>
+    <string name="enterMessage">قم بإدخال الرسالة التي تريد إرسالها</string>
+    <string name="enterSubject">قم بغدخال عنوان الرسالة</string>
+    <string name="startTime">وقت بداية العمل</string>
+    <string name="endTime">وقت نهاية العمل</string>
+    <string name="orderCanceled">تم إلغاء الطلب</string>
+    <string name="orderAccepted">تم قبول الطلب</string>
+    <string name="refuseOrder">رفض الطلب</string>
+    <string name="acceptOrdersTitle">الطلبات المقبولة</string>
+    <string name="refusedOrdersTitle">الطلبات المرفوضة</string>
+    <string name="categories">الأقسام</string>
+    <string name="services">الخدمات</string>
+    <string name="providers">اختر مقدم الخدمة</string>
+    <string name="providerInfo">صفحة مقدم الخدمة</string>
+    <string name="makeOrder">الحجز مع مقدم الخدمة</string>
+    <string name="mainData">المعلومات الأساسية لمزود الخدمة</string>
+    <string name="addShop">إضافة متجر</string>
+    <string name="providerOrders">سجل الطلبات</string>
+    <string name="updateProfile">تعديل البيانات</string>
+    <string name="updatedSuccessfully">تم تحديث بياناتك بنجاح</string>
+    <string name="selectWorkHours">قم بإختيار ساعات العمل</string>
+    <string name="serviceUpdated">تم تعديل الخدمة بنجاح</string>
+    <string name="editService">تعديل الخدمة</string>
+    <string name="welcome">أهلا بك في تطبيق رونق</string>
+    <string name="welcomeUser">مرحبا</string>
+    <string name="loginFirst">قم بإنشاء حساب أو تسجيل الدخول أولا</string>
+    <string name="noFavorites">قائمة المفضلة فارغة</string>
+
+
+    <string-array name="days">
+        <item>السبت</item>
+        <item>الأحد</item>
+        <item>الأثنين</item>
+        <item>الثلاثاء</item>
+        <item>الأربعاء</item>
+        <item>الخميس</item>
+        <item>الجمعة</item>
+    </string-array>
+
 </resources>

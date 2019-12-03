@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
+    android:background="@color/white">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/fragment_make_order_tv_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/test_serviceProviderName"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_make_order_rb_rating"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/fragment_make_order_iv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@+id/fragment_make_order_tv_name"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_make_order_tv_name"
+            app:srcCompat="@mipmap/ic_location" />
+
+        <TextView
+            android:id="@+id/fragment_make_order_tv_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/test_serviceProviderAddress"
+            android:textColor="@color/gray"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_make_order_iv_location"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_make_order_iv_addToFav"
+            app:layout_constraintStart_toEndOf="@+id/fragment_make_order_iv_location"
+            app:layout_constraintTop_toTopOf="@+id/fragment_make_order_iv_location" />
+
+        <RatingBar
+            android:id="@+id/fragment_make_order_rb_rating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:theme="@style/RatingBar"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_make_order_iv_addToFav"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/fragment_make_order_iv_addToFav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="84dp"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_un_fav" />
+
+        <ImageView
+        android:id="@+id/fragment_make_order_iv_workFromHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_make_order_iv_addToFav"
+        app:layout_constraintStart_toStartOf="@+id/fragment_make_order_iv_addToFav"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_make_order_iv_addToFav"
+        app:srcCompat="@mipmap/ic_check" />
+
+        <TextView
+            android:id="@+id/fragment_make_order_tv_workFromHomeTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/workFromHome"
+            android:textColor="@color/gray"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_make_order_iv_workFromHome"
+            app:layout_constraintStart_toEndOf="@+id/fragment_make_order_iv_workFromHome"
+            app:layout_constraintTop_toTopOf="@+id/fragment_make_order_iv_workFromHome" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_make_order_iv_workFromHome" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/select_service"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:background="@color/blueLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_make_order_rv_subServices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        app:spanCount="2"
+        android:background="@color/white"
+        android:nestedScrollingEnabled="false"
+        tools:listitem="@layout/item_sub_service"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/blueLight2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_make_order_rv_subServices" />
+
+        <CheckBox
+            android:id="@+id/fragment_make_order_cb_homeRequest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:button="@drawable/checkbox_white_selector"
+            android:padding="6dp"
+            android:buttonTint="@color/gray"
+            android:text="@string/home_service"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+    <TextView
+        android:id="@+id/fragment_make_order_tv_homeServicePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/home_cost"
+        android:textColor="@color/orange"
+        app:layout_constraintStart_toStartOf="@+id/fragment_make_order_cb_homeRequest"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_make_order_cb_homeRequest" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/blueLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_make_order_tv_homeServicePrice" />
+
+    <CalendarView
+        android:id="@+id/fragment_make_order_cv_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/select_address"
+        android:textColor="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/notes"
+        android:textColor="@color/gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_make_order_cv_date" />
+
+    <EditText
+        android:id="@+id/fragment_make_order_et_notes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:padding="5dp"
+        android:background="@mipmap/bg_notes"
+        android:ems="10"
+        android:hint="@string/addYouDetails"
+        android:inputType="textMultiLine"
+        android:gravity="top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView26"
+        app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+        <Button
+            android:id="@+id/fragment_make_order_btn_sendOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp"
+            android:background="@mipmap/bg_reservation"
+            android:gravity="center"
+            android:paddingBottom="4dp"
+            android:text="@string/send_order"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_make_order_et_notes" />
+
+
+        <ProgressBar
+            android:id="@+id/loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:indeterminateTint="@color/colorPrimary"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

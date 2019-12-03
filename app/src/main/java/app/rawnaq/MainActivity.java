@@ -12,25 +12,36 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import app.rawnaq.classes.GlobalFunctions;
 import app.rawnaq.classes.LocaleHelper;
 import app.rawnaq.classes.Navigator;
 import app.rawnaq.classes.SessionManager;
 import app.rawnaq.fragments.AboutUsFragment;
+import app.rawnaq.fragments.CategoriesFragment;
 import app.rawnaq.fragments.ContactUsFragment;
+import app.rawnaq.fragments.CurrentOrdersFragment;
 import app.rawnaq.fragments.FavoritesFragment;
-import app.rawnaq.fragments.ForgetPass2Fragment;
+import app.rawnaq.fragments.HomeFragment;
 import app.rawnaq.fragments.LoginFragment;
+import app.rawnaq.fragments.OrdersFragment;
+import app.rawnaq.fragments.ProviderInfoFragment;
+import app.rawnaq.fragments.ProviderServicesFragment;
+import app.rawnaq.fragments.SignUpFragment;
 import app.rawnaq.fragments.TermsFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.main_fl_container)
     FrameLayout Container;
-    @BindView(R.id.main_iv_back)
-    ImageView back;
+    @BindView(R.id.main_tv_userName)
+    TextView userName;
 
 
     /*butterKnife don't work with static or private
@@ -51,15 +62,22 @@ public class MainActivity extends AppCompatActivity {
     * */
     public static AppBarLayout appbar;
     public static TextView title;
-    public static TextView accountOrLogin;
+    public static TextView accountOrLoginTxt;
+    public static TextView providerAccountOrLoginTxt;
     public static ImageView menu;
+    public static LinearLayout userContainer;
+    public static LinearLayout providerContainer;
+    public static ImageView back;
+    public static LinearLayout favorites;
+    public static LinearLayout myOrders;
+
 
     private String language;
     SessionManager sessionManager;
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(LocaleHelper.onAttach(newBase)));
     }
 
     @Override
@@ -70,8 +88,17 @@ public class MainActivity extends AppCompatActivity {
         //this line must be added to use butterKnife in the activity
         ButterKnife.bind(this);
         setupAppBar();
+        GlobalFunctions.setDefaultLanguage(this);
+        GlobalFunctions.setUpFont(this);
 
         sessionManager = new SessionManager(this);
+
+        String firstName = sessionManager.getUserName().split(" ")[0];
+        if (firstName.length() > 10)
+            userName.setText(getString(R.string.welcomeUser) + ":  " + firstName.substring(0, 10));
+        else
+            userName.setText(getString(R.string.welcomeUser) + ":  " + firstName);
+
         language = sessionManager.getUserLanguage();
         if (!language.equals("en"))
             language = "ar";
@@ -80,10 +107,51 @@ public class MainActivity extends AppCompatActivity {
 
         appbar = (AppBarLayout) findViewById(R.id.main_appbar);
         title = (TextView) findViewById(R.id.main_tv_title);
-        accountOrLogin = (TextView) findViewById(R.id.main_tv_accountOrLogin);
+        accountOrLoginTxt = (TextView) findViewById(R.id.main_tv_accountOrLoginTxt);
+        providerAccountOrLoginTxt = (TextView) findViewById(R.id.main_tv_providerAccountOrLoginTxt);
         menu = (ImageView) findViewById(R.id.main_iv_menu);
+        userContainer = (LinearLayout) findViewById(R.id.main_ll_userContainer);
+        providerContainer = (LinearLayout) findViewById(R.id.main_ll_providerContainer);
+        back = (ImageView) findViewById(R.id.main_iv_back);
+        favorites = (LinearLayout) findViewById(R.id.main_ll_favorites);
+        myOrders = (LinearLayout) findViewById(R.id.main_ll_myOrders);
 
-        Navigator.loadFragment(this, LoginFragment.newInstance(this), R.id.main_fl_container, false);
+        GlobalFunctions.appInfoApi();
+
+        if (sessionManager.isProvider()) {
+            providerContainer.setVisibility(View.VISIBLE);
+            userContainer.setVisibility(View.GONE);
+        } else {
+            providerContainer.setVisibility(View.GONE);
+            userContainer.setVisibility(View.VISIBLE);
+            if (sessionManager.isGuest()) {
+                favorites.setVisibility(View.GONE);
+                myOrders.setVisibility(View.GONE);
+            }
+        }
+        if (sessionManager.isLoggedIn()) {
+            accountOrLoginTxt.setText(getString(R.string.myAccount));
+            providerAccountOrLoginTxt.setText(getString(R.string.myAccount));
+        } else {
+            accountOrLoginTxt.setText(getString(R.string.login));
+            providerAccountOrLoginTxt.setText(getString(R.string.login));
+        }
+
+
+        if (sessionManager.isLoggedIn() || sessionManager.isGuest()) {
+            if (sessionManager.isProvider()) {
+                if (sessionManager.hasShop()) {
+                    //fix it
+                    Navigator.loadFragment(this, CurrentOrdersFragment.newInstance(this, "waiting"), R.id.main_fl_container, false);
+                } else {
+                    Navigator.loadFragment(this, HomeFragment.newInstance(this), R.id.main_fl_container, false);
+                }
+            } else {
+                Navigator.loadFragment(this, CategoriesFragment.newInstance(this), R.id.main_fl_container, false);
+            }
+        } else {
+            Navigator.loadFragment(this, LoginFragment.newInstance(this), R.id.main_fl_container, false);
+        }
     }
 
     @OnClick(R.id.main_iv_menu)
@@ -115,59 +183,87 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //SideMenu items Clicks
-
-    //myAccount click
     @OnClick(R.id.main_ll_accountOrLogin)
     public void accountClick() {
+        String flag = "";
+        if (!accountOrLoginTxt.getText().toString().equals(getString(R.string.login))) {
+            flag = "update";
+        }
+        Navigator.loadFragment(this, SignUpFragment.newInstance(this, flag), R.id.main_fl_container, true);
         drawerLayout.closeDrawers();
     }
 
-    //contactUs Click
-    @OnClick(R.id.main_ll_myOrders)
-    public void myOrdersClick() {
+
+    @OnClick(R.id.main_ll_providerAccountOrLogin)
+    public void providerAccountClick() {
+        Navigator.loadFragment(this, SignUpFragment.newInstance(this, "update"), R.id.main_fl_container, true);
         drawerLayout.closeDrawers();
     }
 
-    //aboutUs Click
-    @OnClick(R.id.main_ll_aboutUs)
-    public void aboutUsClick() {
-        Navigator.loadFragment(this, AboutUsFragment.newInstance(this), R.id.main_fl_container, false);
-        drawerLayout.closeDrawers();
-    }
-
-    //aboutUs Click
-    @OnClick(R.id.main_ll_contactUs)
-    public void contactUsClick() {
-        Navigator.loadFragment(this, ContactUsFragment.newInstance(this),R.id.main_fl_container,false);
-        drawerLayout.closeDrawers();
-    }
-
-    //aboutUs Click
     @OnClick(R.id.main_ll_favorites)
     public void favoritesClick() {
-        Navigator.loadFragment(this, FavoritesFragment.newInstance(this), R.id.main_fl_container, false);
+        Navigator.loadFragment(this, FavoritesFragment.newInstance(this), R.id.main_fl_container, true);
         drawerLayout.closeDrawers();
     }
 
-    //aboutUs Click
+    @OnClick(R.id.main_ll_myOrders)
+    public void myOrdersClick() {
+        Navigator.loadFragment(this, OrdersFragment.newInstance(this), R.id.main_fl_container, true);
+        drawerLayout.closeDrawers();
+    }
+
+    @OnClick(R.id.main_ll_myServices)
+    public void myServicesClick() {
+        Navigator.loadFragment(this, ProviderServicesFragment.newInstance(this), R.id.main_fl_container, true);
+        drawerLayout.closeDrawers();
+    }
+
+    @OnClick(R.id.main_ll_providerOrders)
+    public void providerOrdersClick() {
+        Navigator.loadFragment(this, OrdersFragment.newInstance(this), R.id.main_fl_container, true);
+        drawerLayout.closeDrawers();
+    }
+
+    @OnClick(R.id.main_ll_providerPage)
+    public void providerPageClick() {
+        if (sessionManager.hasShop()) {
+            Navigator.loadFragment(this, ProviderInfoFragment.newInstance(this), R.id.main_fl_container, true);
+        } else {
+            Navigator.loadFragment(this, HomeFragment.newInstance(this), R.id.main_fl_container, true);
+        }
+        drawerLayout.closeDrawers();
+    }
+
+    @OnClick(R.id.main_ll_aboutUs)
+    public void aboutUsClick() {
+        Navigator.loadFragment(this, AboutUsFragment.newInstance(this), R.id.main_fl_container, true);
+        drawerLayout.closeDrawers();
+    }
+
+    @OnClick(R.id.main_ll_contactUs)
+    public void contactUsClick() {
+        Navigator.loadFragment(this, ContactUsFragment.newInstance(this), R.id.main_fl_container, true);
+        drawerLayout.closeDrawers();
+    }
+
+
     @OnClick(R.id.main_ll_terms)
     public void termsClick() {
-        Navigator.loadFragment(this, TermsFragment.newInstance(this),R.id.main_fl_container,false);
+        Navigator.loadFragment(this, TermsFragment.newInstance(this), R.id.main_fl_container, true);
         drawerLayout.closeDrawers();
     }
 
 
-    //language Click
     @OnClick(R.id.main_ll_language)
     public void languageClick() {
         changeLanguage();
     }
 
     @OnClick(R.id.main_ll_logout)
-    public void logoutClick(){
+    public void logoutClick() {
+        sessionManager.logout();
         clearStack();
-        Navigator.loadFragment(this,LoginFragment.newInstance(this),R.id.main_fl_container,false);
+        Navigator.loadFragment(this, LoginFragment.newInstance(this), R.id.main_fl_container, false);
         drawerLayout.closeDrawers();
     }
 
