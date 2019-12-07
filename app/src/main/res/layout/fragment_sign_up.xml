@@ -9,7 +9,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_sign_up_cl_container">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -193,16 +194,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
             android:layout_marginEnd="8dp"
+            android:button="@drawable/checkbox_white_selector"
             android:gravity="center"
             android:padding="6dp"
-            android:button="@drawable/checkbox_white_selector"
-            android:text="@string/agree"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.309"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_sign_up_rb_user" />
 
+        <TextView
+            android:id="@+id/fragment_sign_up_tv_agreeTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/agree"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_sign_up_cb_agree"
+            app:layout_constraintStart_toEndOf="@+id/fragment_sign_up_cb_agree"
+            app:layout_constraintTop_toTopOf="@+id/fragment_sign_up_cb_agree" />
 
         <ImageView
             android:id="@+id/fragment_sign_up_iv_bottomBg"

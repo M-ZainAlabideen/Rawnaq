@@ -3,6 +3,7 @@ package app.rawnaq.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,6 +18,7 @@ import java.util.Map;
 
 import app.rawnaq.MainActivity;
 import app.rawnaq.R;
+import app.rawnaq.classes.FixControl;
 import app.rawnaq.classes.GlobalFunctions;
 import app.rawnaq.classes.Navigator;
 import app.rawnaq.classes.SessionManager;
@@ -34,6 +36,8 @@ public class ContactUsFragment extends Fragment {
     public static ContactUsFragment fragment;
     private SessionManager sessionManager;
 
+    @BindView(R.id.fragment_contact_us_cl_container)
+    ConstraintLayout container;
     @BindView(R.id.fragment_contact_us_tv_phoneContact)
     TextView phoneContact;
     @BindView(R.id.fragment_contact_us_tv_emailContact)
@@ -44,8 +48,6 @@ public class ContactUsFragment extends Fragment {
     EditText email;
     @BindView(R.id.fragment_contact_us_et_phone)
     EditText phone;
-    @BindView(R.id.fragment_contact_us_et_subject)
-    EditText subject;
     @BindView(R.id.fragment_contact_us_et_message)
     EditText message;
     @BindView(R.id.loading)
@@ -69,6 +71,8 @@ public class ContactUsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.VISIBLE);
+        MainActivity.back.setVisibility(View.VISIBLE);
+        FixControl.setupUI(container,activity);
         MainActivity.title.setText(getString(R.string.contactUs));
 
         sessionManager = new SessionManager(activity);
@@ -99,7 +103,6 @@ public class ContactUsFragment extends Fragment {
         String nameStr = name.getText().toString();
         String phoneStr = phone.getText().toString();
         String emailStr = email.getText().toString();
-        String subjectStr = subject.getText().toString();
         String messageStr = message.getText().toString();
         if (nameStr == null || nameStr.isEmpty()) {
             Snackbar.make(loading, getString(R.string.enterName), Snackbar.LENGTH_SHORT).show();
@@ -107,13 +110,11 @@ public class ContactUsFragment extends Fragment {
             Snackbar.make(loading, getString(R.string.enterPhone), Snackbar.LENGTH_SHORT).show();
         } else if (emailStr == null || emailStr.isEmpty()) {
             Snackbar.make(loading, getString(R.string.enterEmail), Snackbar.LENGTH_SHORT).show();
-        } else if (subjectStr == null || subjectStr.isEmpty()) {
-            Snackbar.make(loading, getString(R.string.enterSubject), Snackbar.LENGTH_SHORT).show();
         } else if (messageStr == null || messageStr.isEmpty()) {
             Snackbar.make(loading, getString(R.string.enterMessage), Snackbar.LENGTH_SHORT).show();
         }
         else {
-            contactApi(nameStr,phoneStr,emailStr,subjectStr,messageStr);
+            contactApi(nameStr,phoneStr,emailStr,messageStr);
         }
 
     }
@@ -122,13 +123,12 @@ public class ContactUsFragment extends Fragment {
         name.setText("");
         phone.setText("");
         email.setText("");
-        subject.setText("");
         message.setText("");
     }
 
-    private void contactApi(final String name, String phone, String mail, String subject, String message) {
+    private void contactApi(final String name, String phone, String mail, String message) {
         loading.setVisibility(View.VISIBLE);
-        RawnaqApiConfig.getCallingAPIInterface().Contact(name, phone, mail, subject, message, new Callback<GeneralResponse>() {
+        RawnaqApiConfig.getCallingAPIInterface().Contact(name, phone, mail, message, new Callback<GeneralResponse>() {
             @Override
             public void success(GeneralResponse generalResponse, Response response) {
                 loading.setVisibility(View.GONE);

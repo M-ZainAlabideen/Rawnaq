@@ -58,33 +58,35 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.view
 
     @Override
     public void onBindViewHolder(@NonNull FavoritesAdapter.viewHolder viewHolder, final int position) {
-        String shopName = favoritesList.get(position).providerShop.nameShop;
-        String city = favoritesList.get(position).providerShop.city.name;
-        String zone = favoritesList.get(position).providerShop.zone.name;
-        String street = favoritesList.get(position).providerShop.street;
-        int workFromHome = favoritesList.get(position).providerShop.workFromHome;
-        boolean fav = favoritesList.get(position).providerShop.fav;
-        double rate = favoritesList.get(position).providerShop.rate;
+        if(favoritesList.get(position) != null) {
+            String shopName = favoritesList.get(position).providerShop.nameShop;
+            String city = favoritesList.get(position).providerShop.city.name;
+            String zone = favoritesList.get(position).providerShop.zone.name;
+            String street = favoritesList.get(position).providerShop.street;
+            int workFromHome = favoritesList.get(position).providerShop.workFromHome;
+            boolean fav = favoritesList.get(position).providerShop.fav;
+            double rate = favoritesList.get(position).providerShop.rate;
 
-        if (shopName != null && !shopName.isEmpty()) {
-            if (shopName.length() >= 10) {
-                viewHolder.name.setText(shopName.substring(0, 9));
-            } else {
-                viewHolder.name.setText(shopName);
+            if (shopName != null && !shopName.isEmpty()) {
+                if (shopName.length() >= 10) {
+                    viewHolder.name.setText(shopName.substring(0, 9));
+                } else {
+                    viewHolder.name.setText(shopName);
+                }
             }
-        }
-        if (city != null && !city.isEmpty() && zone != null && !zone.isEmpty() && street != null && !street.isEmpty()) {
-            viewHolder.address.setText(city+"| "+zone+"| "+street);
-        }
+            if (city != null && !city.isEmpty() && zone != null && !zone.isEmpty() && street != null && !street.isEmpty()) {
+                viewHolder.address.setText(city + "| " + zone + "| " + street);
+            }
 
-        if(workFromHome == 0){
-            viewHolder.availableInHome.setVisibility(View.GONE);
-            viewHolder.availableInHomeTV.setVisibility(View.GONE);
+            if (workFromHome == 0) {
+                viewHolder.availableInHome.setVisibility(View.GONE);
+                viewHolder.availableInHomeTV.setVisibility(View.GONE);
+            }
+            if (fav) {
+                viewHolder.addToFav.setImageResource(R.mipmap.ic_fav);
+            }
+            viewHolder.rating.setRating((float) rate);
         }
-        if(fav){
-            viewHolder.addToFav.setImageResource(R.mipmap.ic_fav);
-        }
-        viewHolder.rating.setRating((float) rate);
     }
 
     @Override

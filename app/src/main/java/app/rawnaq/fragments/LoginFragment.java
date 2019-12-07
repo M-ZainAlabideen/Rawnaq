@@ -3,22 +3,32 @@ package app.rawnaq.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
 import java.util.Map;
 
 import app.rawnaq.MainActivity;
 import app.rawnaq.R;
+import app.rawnaq.classes.FixControl;
 import app.rawnaq.classes.Navigator;
 import app.rawnaq.classes.SessionManager;
 import app.rawnaq.webservices.RawnaqApiConfig;
+import app.rawnaq.webservices.responses.general.GeneralResponse;
 import app.rawnaq.webservices.responses.user.Provider;
 import app.rawnaq.webservices.responses.user.User;
 import app.rawnaq.webservices.responses.user.UserResponse;
@@ -32,9 +42,11 @@ import retrofit.client.Response;
 public class LoginFragment extends Fragment {
     public static FragmentActivity activity;
     public static LoginFragment fragment;
-
     public static SessionManager sessionManager;
+    private String regId = "";
 
+    @BindView(R.id.fragment_login_cl_container)
+    ConstraintLayout container;
     @BindView(R.id.fragment_login_et_phone)
     EditText phone;
     @BindView(R.id.fragment_login_et_password)
@@ -61,6 +73,7 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.GONE);
+        FixControl.setupUI(container,activity);
     }
 
     @OnClick(R.id.fragment_login_btn_login)
@@ -87,6 +100,8 @@ public class LoginFragment extends Fragment {
                             loading.setVisibility(View.GONE);
                             int status = userResponse.status;
                             if (status == 200) {
+                                clearStack();
+
                                 if (userResponse.user != null) {
                                     User myUser = userResponse.user;
                                     sessionManager.setUserToken(myUser.apiToken);
@@ -94,11 +109,11 @@ public class LoginFragment extends Fragment {
                                     sessionManager.setUserName(myUser.name);
                                     sessionManager.setUserPhone(myUser.phone);
 
-                                    // if (sessionManager.isValidation()) {
+                                     if (sessionManager.isValidation()) {
                                     Navigator.loadFragment(activity, CategoriesFragment.newInstance(activity), R.id.main_fl_container, false);
-//                                    } else {
-//                                        Navigator.loadFragment(activity, ValidationCodeFragment.newInstance(activity), R.id.main_fl_container, false);
-//                                    }
+                                    } else {
+                                        Navigator.loadFragment(activity, ValidationCodeFragment.newInstance(activity,false), R.id.main_fl_container, false);
+                                    }
                                 } else if (userResponse.provider != null) {
                                     Provider myProvider = userResponse.provider;
                                     sessionManager.setProviderId(myProvider.id);
@@ -107,20 +122,26 @@ public class LoginFragment extends Fragment {
                                     sessionManager.setUserName(myProvider.name);
                                     sessionManager.setUserPhone(myProvider.phone);
                                     sessionManager.setProvider();
-                                    //fix it
+
                                     if (myProvider.providerShop != null) {
                                         sessionManager.setShop();
                                     }
-                                    //   if (sessionManager.isValidation()) {
+                                      if (sessionManager.isValidation()) {
                                     if (sessionManager.hasShop()) {
-                                        Navigator.loadFragment(activity, OrdersFragment.newInstance(activity), R.id.main_fl_container, false);
+                                        Navigator.loadFragment(activity, CurrentOrdersFragment.newInstance(activity, "waiting"), R.id.main_fl_container, false);
                                     } else {
                                         Navigator.loadFragment(activity, HomeFragment.newInstance(activity), R.id.main_fl_container, false);
                                     }
-//                                    } else {
-//                                        Navigator.loadFragment(activity, ValidationCodeFragment.newInstance(activity), R.id.main_fl_container, false);
-//                                    }
+                                    } else {
+                                        Navigator.loadFragment(activity, ValidationCodeFragment.newInstance(activity,false), R.id.main_fl_container, false);
+                                    }
                                 }
+                                String firstName = sessionManager.getUserName().split(" ")[0];
+                                if (firstName.length() > 10)
+                                    MainActivity.userName.setText(getString(R.string.welcomeUser) + ":  " + firstName.substring(0, 10));
+                                else
+                                    MainActivity.userName.setText(getString(R.string.welcomeUser) + ":  " + firstName);
+
                                 if (sessionManager.isGuest()) {
                                     sessionManager.guestLogout();
                                 }
@@ -135,6 +156,26 @@ public class LoginFragment extends Fragment {
                                 }
                                 MainActivity.accountOrLoginTxt.setText(getString(R.string.myAccount));
                                 MainActivity.providerAccountOrLoginTxt.setText(getString(R.string.myAccount));
+
+                                FirebaseInstanceId.getInstance().getInstanceId()
+                                        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                if (!task.isSuccessful()) {
+                                                    Log.w("login", "getInstanceId failed", task.getException());
+                                                    return;
+                                                }
+
+                                                // Get new Instance ID token
+                                                regId = task.getResult().getToken();
+
+                                                Log.e("registerationid Splash ", "regid -> "+regId);
+
+                                                registerFirebaseTokenApi();
+
+
+                                            }
+                                        });
                             } else if (status == 415) {
                                 Snackbar.make(loading, getString(R.string.unRegisterPhone), Snackbar.LENGTH_SHORT).show();
                             } else if (status == 410) {
@@ -170,4 +211,30 @@ public class LoginFragment extends Fragment {
     }
 
 
+    private void registerFirebaseTokenApi() {
+
+        RawnaqApiConfig.getCallingAPIInterface().registerFirebaseToken(sessionManager.getUserToken(), regId,
+                new Callback<GeneralResponse>() {
+                    @Override
+                    public void success(GeneralResponse generalResponse, Response response) {
+                        if (generalResponse.status == 200) {
+                            sessionManager.setRegId(regId);
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+
+                });
+
+    }
+
+    private void clearStack() {
+        FragmentManager fm = activity.getSupportFragmentManager();
+        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
+    }
 }

@@ -107,7 +107,7 @@ public class ProvidersAdapter extends RecyclerView.Adapter<ProvidersAdapter.view
                 }
             }
             if (city != null && !city.isEmpty() && zone != null && !zone.isEmpty() && street != null && !street.isEmpty()) {
-                viewHolder.address.setText(city + "| " + zone + "| " + street);
+                viewHolder.address.setText(city + "| " + zone);
             }
 
             viewHolder.rating.setRating((float) ratingValue);

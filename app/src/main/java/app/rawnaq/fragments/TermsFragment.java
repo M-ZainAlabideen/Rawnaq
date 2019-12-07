@@ -48,6 +48,7 @@ public class TermsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.VISIBLE);
+        MainActivity.back.setVisibility(View.VISIBLE);
         MainActivity.title.setText(getString(R.string.terms));
 
         policyUser.setText(GlobalFunctions.policy_user);

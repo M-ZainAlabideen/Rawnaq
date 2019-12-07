@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 import app.rawnaq.MainActivity;
 import app.rawnaq.R;
+import app.rawnaq.classes.FixControl;
+import app.rawnaq.classes.GlobalFunctions;
 import app.rawnaq.classes.Navigator;
 import app.rawnaq.classes.SessionManager;
 import app.rawnaq.webservices.RawnaqApiConfig;
@@ -94,12 +96,13 @@ public class AddServiceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.VISIBLE);
+        MainActivity.back.setVisibility(View.VISIBLE);
+        FixControl.setupUI(container,activity);
         serviceData = (ProviderService) getArguments().getSerializable("serviceData");
 
-        if(serviceData == null) {
+        if (serviceData == null) {
             MainActivity.title.setText(getString(R.string.addService));
-        }
-        else{
+        } else {
             MainActivity.title.setText(getString(R.string.editService));
         }
         container.setVisibility(View.GONE);
@@ -175,6 +178,8 @@ public class AddServiceFragment extends Fragment {
 
     @OnClick(R.id.fragment_add_service_btn_save)
     public void saveClick() {
+        //the ServiceProviderId(id of the service which will be updated) used in case of editing/updating Service only
+        int providerServiceId = 0;
         String serviceCostStr = serviceCost.getText().toString();
         String serviceSegment = null;
         String serviceCostWithOfferStr = null;
@@ -195,21 +200,22 @@ public class AddServiceFragment extends Fragment {
             serviceCostWithOfferStr = serviceCostWithOffer.getText().toString();
             if (serviceCostWithOfferStr == null || serviceCostWithOfferStr.isEmpty()) {
                 Snackbar.make(loading, getString(R.string.enterServiceCostWithOffer), Snackbar.LENGTH_SHORT).show();
-            } if(serviceData != null){
-                editServiceApi(serviceId, serviceSegment, Integer.parseInt(serviceCostStr),
-                        1, Integer.parseInt(serviceCostWithOfferStr));
+            } else {
+                if (serviceData != null) {
+                    providerServiceId = serviceData.id;
+                    editServiceApi(providerServiceId, serviceId, serviceSegment, Integer.parseInt(serviceCostStr),
+                            1, Integer.parseInt(serviceCostWithOfferStr));
+                } else {
+                    addServiceApi(serviceId, serviceSegment, Integer.parseInt(serviceCostStr),
+                            1, Integer.parseInt(serviceCostWithOfferStr));
+                }
             }
-            else {
-                addServiceApi(serviceId, serviceSegment, Integer.parseInt(serviceCostStr),
-                        1, Integer.parseInt(serviceCostWithOfferStr));
-            }
-
         } else {
-            if (serviceData != null){
-                editServiceApi(serviceId, serviceSegment, Integer.parseInt(serviceCostStr),
+            if (serviceData != null) {
+                providerServiceId = serviceData.id;
+                editServiceApi(providerServiceId, serviceId, serviceSegment, Integer.parseInt(serviceCostStr),
                         0, 0);
-            }
-            else {
+            } else {
                 addServiceApi(serviceId, serviceSegment, Integer.parseInt(serviceCostStr),
                         0, 0);
             }
@@ -279,20 +285,20 @@ public class AddServiceFragment extends Fragment {
 
         );
     }
-    private void editServiceApi(int serviceId,String type, int price, int isDiscount, int discount){
+
+    private void editServiceApi(int providerServiceId, int serviceId, String type, int price, int isDiscount, int discount) {
         loading.setVisibility(View.VISIBLE);
         RawnaqApiConfig.getCallingAPIInterface().providerEditService(sessionManager.getUserToken(),
-                sessionManager.getProviderId(), serviceId, type, price, isDiscount, discount,
+                providerServiceId, serviceId, type, price, isDiscount, discount,
                 new Callback<ProviderServiceResponse>() {
                     @Override
                     public void success(ProviderServiceResponse providerServiceResponse, Response response) {
                         int status = providerServiceResponse.status;
-                        //fix it
-                       // if(status == 200){
+                        if (status == 200) {
                             loading.setVisibility(View.GONE);
                             Snackbar.make(loading, getString(R.string.serviceUpdated), Snackbar.LENGTH_SHORT).show();
                             Navigator.loadFragment(activity, ProviderServicesFragment.newInstance(activity), R.id.main_fl_container, false);
-                      //  }
+                        }
                     }
 
                     @Override

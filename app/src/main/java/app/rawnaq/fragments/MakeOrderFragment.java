@@ -3,6 +3,7 @@ package app.rawnaq.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -25,6 +26,7 @@ import java.util.Calendar;
 import app.rawnaq.MainActivity;
 import app.rawnaq.R;
 import app.rawnaq.adapters.SubServicesAdapter;
+import app.rawnaq.classes.FixControl;
 import app.rawnaq.classes.GpsTracker;
 import app.rawnaq.classes.Navigator;
 import app.rawnaq.classes.SessionManager;
@@ -53,6 +55,8 @@ public class MakeOrderFragment extends Fragment {
     private double currentLat;
     private double currentLng;
 
+    @BindView(R.id.fragment_make_order_cl_container)
+    ConstraintLayout container;
     @BindView(R.id.fragment_make_order_rv_subServices)
     RecyclerView subServices;
     @BindView(R.id.fragment_make_order_tv_name)
@@ -97,6 +101,8 @@ public class MakeOrderFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.VISIBLE);
+        MainActivity.back.setVisibility(View.VISIBLE);
+        FixControl.setupUI(container,activity);
 
         provider = (Provider) getArguments().getSerializable("provider");
         MainActivity.title.setText(provider.providerShop.nameShop);

@@ -53,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.main_fl_container)
     FrameLayout Container;
-    @BindView(R.id.main_tv_userName)
-    TextView userName;
 
 
     /*butterKnife don't work with static or private
@@ -70,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
     public static ImageView back;
     public static LinearLayout favorites;
     public static LinearLayout myOrders;
-
+    public static TextView userName;
+    public static LinearLayout logout;
 
     private String language;
     SessionManager sessionManager;
@@ -93,11 +92,6 @@ public class MainActivity extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
 
-        String firstName = sessionManager.getUserName().split(" ")[0];
-        if (firstName.length() > 10)
-            userName.setText(getString(R.string.welcomeUser) + ":  " + firstName.substring(0, 10));
-        else
-            userName.setText(getString(R.string.welcomeUser) + ":  " + firstName);
 
         language = sessionManager.getUserLanguage();
         if (!language.equals("en"))
@@ -115,6 +109,14 @@ public class MainActivity extends AppCompatActivity {
         back = (ImageView) findViewById(R.id.main_iv_back);
         favorites = (LinearLayout) findViewById(R.id.main_ll_favorites);
         myOrders = (LinearLayout) findViewById(R.id.main_ll_myOrders);
+        userName = (TextView) findViewById(R.id.main_tv_userName);
+        logout = (LinearLayout) findViewById(R.id.main_ll_logout);
+
+        String firstName = sessionManager.getUserName().split(" ")[0];
+        if (firstName.length() > 10)
+            userName.setText(getString(R.string.welcomeUser) + ":  " + firstName.substring(0, 10));
+        else
+            userName.setText(getString(R.string.welcomeUser) + ":  " + firstName);
 
         GlobalFunctions.appInfoApi();
 
@@ -127,6 +129,10 @@ public class MainActivity extends AppCompatActivity {
             if (sessionManager.isGuest()) {
                 favorites.setVisibility(View.GONE);
                 myOrders.setVisibility(View.GONE);
+                logout.setVisibility(View.GONE);
+            }
+            else {
+                logout.setVisibility(View.VISIBLE);
             }
         }
         if (sessionManager.isLoggedIn()) {
@@ -185,14 +191,19 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.main_ll_accountOrLogin)
     public void accountClick() {
-        String flag = "";
-        if (!accountOrLoginTxt.getText().toString().equals(getString(R.string.login))) {
-            flag = "update";
+        if (accountOrLoginTxt.getText().toString().equals(getString(R.string.login))) {
+            Navigator.loadFragment(this, LoginFragment.newInstance(this), R.id.main_fl_container, true);
+        } else {
+            Navigator.loadFragment(this, SignUpFragment.newInstance(this, "update"), R.id.main_fl_container, true);
         }
-        Navigator.loadFragment(this, SignUpFragment.newInstance(this, flag), R.id.main_fl_container, true);
         drawerLayout.closeDrawers();
     }
 
+    @OnClick(R.id.main_ll_home)
+    public void homeClick() {
+        Navigator.loadFragment(this, CategoriesFragment.newInstance(this), R.id.main_fl_container, true);
+        drawerLayout.closeDrawers();
+    }
 
     @OnClick(R.id.main_ll_providerAccountOrLogin)
     public void providerAccountClick() {

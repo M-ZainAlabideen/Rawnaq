@@ -47,7 +47,9 @@ public class AboutUsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MainActivity.appbar.setVisibility(View.GONE);
+        MainActivity.appbar.setVisibility(View.VISIBLE);
+        MainActivity.back.setVisibility(View.VISIBLE);
+        MainActivity.title.setText(getString(R.string.aboutsUs));
         aboutApp.setText(GlobalFunctions.aboutApp);
         AppFeatures.setText(GlobalFunctions.featureList);
     }

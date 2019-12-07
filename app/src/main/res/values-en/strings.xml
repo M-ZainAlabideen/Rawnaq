@@ -109,11 +109,11 @@ Or contact us on the contact form for a complaint or suggestion</string>
     <string name="noOrders">No Orders Available Now</string>
     <string name="shopName">Shop Name</string>
     <string name="phoneForContact">Mobile Number For Contact</string>
-    <string name="brief">Description About You Shop...</string>
+    <string name="brief">Description About You...</string>
     <string name="addImages">Add Images</string>
     <string name="streetName">Street Name</string>
     <string name="workHours">Work Hours</string>
-    <string name="enterHomeCost">Additional Cost For Home Service</string>
+    <string name="enterHomeCost">Cost For Home Service</string>
     <string name="saveYourData">Your Location Will be Saved Using GPS For Showing on Map</string>
     <string name="saveMainData">Main Information</string>
     <string name="mainCategory">Main Category</string>
@@ -162,6 +162,8 @@ Or contact us on the contact form for a complaint or suggestion</string>
     <string name="welcomeUser">Welcome</string>
     <string name="loginFirst">Create Account Or Login First</string>
     <string name="noFavorites">Favorites List Is Empty</string>
+    <string name="home">Home</string>
+    <string name="serviceDeletedSuccessfully">Service Deleted Successfully</string>
 
     <string-array name="days">
         <item name="saturday">saturday</item>

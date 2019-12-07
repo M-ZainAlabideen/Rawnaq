@@ -21,7 +21,8 @@ public class SessionManager {
     private static final String EMAIL = "email";
     private static final String AS_GUEST = "continue_as_guest";
     private static final String LANGUAGE_CODE = "language_code";
-
+    private static String IsNotificationOn = "IsNotificationOn";
+    public static final String KEY_RegID = "regId";
 
     public SessionManager(Context context) {
         this.context = context;
@@ -49,6 +50,7 @@ public class SessionManager {
         editor.putBoolean(HAS_SHOP,false);
         editor.putString(USER_TOKEN,null);
         editor.putInt(PROVIDER_ID,0);
+        guestLogout();
         editor.commit();
     }
     public void ContinueAsGuest() {
@@ -128,4 +130,16 @@ public class SessionManager {
     }
 
 
+    public boolean isNotificationOn(){
+        return  sharedPref.getBoolean(IsNotificationOn,true);
+    }
+
+    public String getRegId() {
+        return sharedPref.getString(KEY_RegID, "");
+    }
+
+    public void setRegId(String id) {
+        editor.putString(KEY_RegID, id);
+        editor.commit();
+    }
 }

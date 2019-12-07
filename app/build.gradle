@@ -56,12 +56,18 @@ dependencies {
     implementation 'com.cuneytayyildiz:gestureimageview:1.0.0'
 
 
-    implementation 'com.google.android.gms:play-services:12.0.1'
+   // implementation 'com.google.android.gms:play-services:12.0.1'
+
+    implementation 'com.google.android.gms:play-services-maps:15.0.0'
+
 
     //library for change the font of all the app
     implementation 'uk.co.chrisjenx:calligraphy:2.1.0'
 
     implementation 'com.android.support:multidex:1.0.0'
 
-}
+    //firebase cloud messaging(FCM)
+    implementation 'com.google.firebase:firebase-messaging:17.6.0'
 
+}
+apply plugin: 'com.google.gms.google-services'

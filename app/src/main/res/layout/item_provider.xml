@@ -47,17 +47,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="10dp"
         android:text="@string/workFromHome"
         app:layout_constraintBottom_toBottomOf="@+id/item_provider_iv_workFromHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/item_provider_iv_workFromHome"
-        app:layout_constraintTop_toTopOf="@+id/item_provider_iv_workFromHome" />
+        app:layout_constraintTop_toTopOf="@+id/item_provider_iv_workFromHome"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/imageView32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="@+id/item_provider_tv_name"
         app:layout_constraintTop_toBottomOf="@+id/item_provider_tv_name"
         app:srcCompat="@mipmap/ic_location" />
@@ -66,7 +69,7 @@
         android:id="@+id/item_provider_iv_addToFav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="84dp"
+        android:layout_marginEnd="100dp"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_provider_iv_image"
@@ -96,7 +99,7 @@
         android:id="@+id/view7"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="28dp"
         android:background="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

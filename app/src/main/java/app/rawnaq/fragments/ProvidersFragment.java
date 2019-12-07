@@ -72,8 +72,8 @@ public class ProvidersFragment extends Fragment {
     private ArrayAdapter<String> zonesAdapter;
     private LinearLayoutManager layoutManager;
     private boolean searchCheck = false;
-    private int serviceId;
-    public String serviceName;
+    private int categoryId;
+    public String categoryName;
 
 
     @BindView(R.id.fragment_providers_cl_searchContainer)
@@ -131,11 +131,12 @@ public class ProvidersFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.VISIBLE);
+        MainActivity.back.setVisibility(View.VISIBLE);
 
         searchContainer.setVisibility(View.GONE);
-        serviceId = getArguments().getInt("serviceId");
-        serviceName = getArguments().getString("serviceName");
-        MainActivity.title.setText(serviceName);
+        categoryId = getArguments().getInt("categoryId");
+        categoryName = getArguments().getString("categoryName");
+        MainActivity.title.setText(categoryName);
 
         layoutManager = new LinearLayoutManager(activity);
         providersAdapter = new ProvidersAdapter(activity, providersList, new ProvidersAdapter.OnItemClickListener() {
@@ -366,11 +367,10 @@ public class ProvidersFragment extends Fragment {
         searchContainer.setVisibility(View.GONE);
         searchCheck = false;
     }
-
     private void providersApi(Integer rate, Integer nearBy, Integer discount, Double longitude, Double latitude) {
         loading.setVisibility(View.VISIBLE);
         RawnaqApiConfig.getCallingAPIInterface().provider(
-                sessionManager.getUserToken(), serviceId,
+                sessionManager.getUserToken(), categoryId,
                 rate, nearBy, discount, longitude, latitude, new Callback<ProvidersResponse>() {
                     @Override
                     public void success(ProvidersResponse providersResponse, Response response) {
@@ -401,7 +401,6 @@ public class ProvidersFragment extends Fragment {
                 }
         );
     }
-
     public void providersSearchApi(int country, int city, int zone) {
         loading.setVisibility(View.VISIBLE);
         RawnaqApiConfig.getCallingAPIInterface().providerSearch(country, city, zone,
@@ -432,7 +431,6 @@ public class ProvidersFragment extends Fragment {
                 }
         );
     }
-
     private void makeFavoriteApi(int providerId, final ImageView addToFav) {
         loading.setVisibility(View.VISIBLE);
         RawnaqApiConfig.getCallingAPIInterface().makeFavorite(
@@ -459,7 +457,6 @@ public class ProvidersFragment extends Fragment {
                 }
         );
     }
-
     public void getCountries() {
         RawnaqApiConfig.getCallingAPIInterface().getCountries(new Callback<CountriesResponse>() {
             @Override

@@ -9,7 +9,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_make_order_cl_container">
 
         <TextView
             android:id="@+id/fragment_make_order_tv_name"

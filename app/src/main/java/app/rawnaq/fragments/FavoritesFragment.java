@@ -64,8 +64,8 @@ public class FavoritesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.VISIBLE);
+        MainActivity.back.setVisibility(View.VISIBLE);
         MainActivity.title.setText(getString(R.string.favorites));
-
 
         layoutManager = new LinearLayoutManager(activity);
         favoritesAdapter = new FavoritesAdapter(activity, favoritesList);

@@ -9,6 +9,7 @@
     android:fillViewport="true">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/fragment_contact_us_cl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -194,22 +195,22 @@
         app:layout_constraintStart_toStartOf="@+id/fragment_contact_us_et_phone"
         app:layout_constraintTop_toBottomOf="@+id/fragment_contact_us_et_phone" />
 
-    <EditText
-        android:id="@+id/fragment_contact_us_et_message"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/curved_corners_with_stroke"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="@string/content"
-        android:inputType="textMultiLine"
-        android:paddingBottom="80dp"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/fragment_contact_us_et_subject"
-        app:layout_constraintStart_toStartOf="@+id/fragment_contact_us_et_subject"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_contact_us_et_subject" />
+        <EditText
+            android:id="@+id/fragment_contact_us_et_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/curved_corners_with_stroke"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/content"
+            android:layout_marginTop="24dp"
+            android:inputType="textMultiLine"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="80dp"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_contact_us_et_email"
+            app:layout_constraintStart_toStartOf="@+id/fragment_contact_us_et_email"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_contact_us_et_email" />
 
     <TextView
         android:id="@+id/textView33"
@@ -227,21 +228,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView29" />
 
-    <EditText
-        android:id="@+id/fragment_contact_us_et_subject"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/curved_corners_with_stroke"
-        android:ems="10"
-        android:hint="@string/subject"
-        android:inputType="text"
-        android:padding="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/fragment_contact_us_et_email"
-        app:layout_constraintStart_toStartOf="@+id/fragment_contact_us_et_email"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_contact_us_et_email" />
-
-    <Button
+        <Button
         android:id="@+id/fragment_contact_us_btn_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

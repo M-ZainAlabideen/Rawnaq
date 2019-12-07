@@ -113,6 +113,7 @@ public class ProviderInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.VISIBLE);
+        MainActivity.back.setVisibility(View.VISIBLE);
 
         container.setVisibility(View.GONE);
 
@@ -193,8 +194,6 @@ public class ProviderInfoFragment extends Fragment {
                 mMap.clear(); //clear old markers
 
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 14.0f));
-
-
                 mMap.addMarker(new MarkerOptions()
                         .position(new LatLng(lat, lng)));
 
@@ -252,10 +251,10 @@ public class ProviderInfoFragment extends Fragment {
 
     private void ProviderInfoApi() {
         int providerId = 0;
-        if (sessionManager.isGuest()) {
-            providerId = getArguments().getInt("providerId");
-        } else {
+        if (sessionManager.isProvider()) {
             providerId = sessionManager.getProviderId();
+        } else {
+            providerId = getArguments().getInt("providerId");
         }
 
         RawnaqApiConfig.getCallingAPIInterface().ProviderInfo(

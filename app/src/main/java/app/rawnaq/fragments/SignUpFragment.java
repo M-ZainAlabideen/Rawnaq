@@ -3,9 +3,12 @@ package app.rawnaq.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +21,18 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
 import app.rawnaq.MainActivity;
 import app.rawnaq.R;
 import app.rawnaq.classes.FixControl;
 import app.rawnaq.classes.Navigator;
 import app.rawnaq.classes.SessionManager;
 import app.rawnaq.webservices.RawnaqApiConfig;
+import app.rawnaq.webservices.responses.general.GeneralResponse;
 import app.rawnaq.webservices.responses.user.Provider;
 import app.rawnaq.webservices.responses.user.UserResponse;
 import app.rawnaq.webservices.responses.user.User;
@@ -39,6 +48,8 @@ public class SignUpFragment extends Fragment {
     public static SignUpFragment fragment;
     public static SessionManager sessionManager;
 
+    @BindView(R.id.fragment_sign_up_cl_container)
+    ConstraintLayout container;
     @BindView(R.id.fragment_sign_up_et_name)
     EditText name;
     @BindView(R.id.fragment_sign_up_et_email)
@@ -65,8 +76,12 @@ public class SignUpFragment extends Fragment {
     TextView login;
     @BindView(R.id.fragment_sign_up_iv_bottomBg)
     ImageView bottomBg;
+    @BindView(R.id.fragment_sign_up_tv_agreeTxt)
+    TextView agreeText;
     @BindView(R.id.loading)
     ProgressBar loading;
+
+    String regId = "";
 
     public static SignUpFragment newInstance(FragmentActivity activity, String comingFrom) {
         fragment = new SignUpFragment();
@@ -90,7 +105,7 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.GONE);
-
+        FixControl.setupUI(container,activity);
         if (getArguments().getString("comingFrom").equals("update")) {
             serviceProvider.setVisibility(View.INVISIBLE);
             user.setVisibility(View.INVISIBLE);
@@ -98,6 +113,7 @@ public class SignUpFragment extends Fragment {
             login.setVisibility(View.INVISIBLE);
             agree.setVisibility(View.INVISIBLE);
             password.setVisibility(View.GONE);
+            agreeText.setVisibility(View.GONE);
             confirmPassword.setVisibility(View.GONE);
             bottomBg.setVisibility(View.GONE);
             signUp.setText(getString(R.string.save));
@@ -153,7 +169,7 @@ public class SignUpFragment extends Fragment {
                             public void success(UserResponse userResponse, Response response) {
                                 loading.setVisibility(View.GONE);
                                 if (!sessionManager.getUserPhone().equals(phoneStr)) {
-                                    Navigator.loadFragment(activity, ValidationCodeFragment.newInstance(activity,true), R.id.main_fl_container, false);
+                                    Navigator.loadFragment(activity, ValidationCodeFragment.newInstance(activity, true), R.id.main_fl_container, false);
                                 } else {
                                     Snackbar.make(loading, getString(R.string.updatedSuccessfully), Snackbar.LENGTH_SHORT).show();
                                     activity.onBackPressed();
@@ -165,14 +181,38 @@ public class SignUpFragment extends Fragment {
                                     sessionManager.setUserName(myUser.name);
                                     sessionManager.setUserPhone(myUser.phone);
 
+
                                 } else if (userResponse.provider != null) {
                                     Provider myProvider = userResponse.provider;
                                     sessionManager.setUserToken(myProvider.apiToken);
                                     sessionManager.setUserMail(myProvider.email);
                                     sessionManager.setUserName(myProvider.name);
                                     sessionManager.setUserPhone(myProvider.phone);
+
                                 }
 
+
+                                String firstName = sessionManager.getUserName().split(" ")[0];
+                                if (firstName.length() > 10)
+                                    MainActivity.userName.setText(getString(R.string.welcomeUser) + ":  " + firstName.substring(0, 10));
+                                else
+                                    MainActivity.userName.setText(getString(R.string.welcomeUser) + ":  " + firstName);
+
+                                FirebaseInstanceId.getInstance().getInstanceId()
+                                        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                if (!task.isSuccessful()) {
+                                                    Log.w("login", "getInstanceId failed", task.getException());
+                                                    return;
+                                                }
+
+                                                // Get new Instance ID token
+                                                String regId = task.getResult().getToken();
+                                                sessionManager.setRegId(regId);
+
+                                            }
+                                        });
                             }
 
                             @Override
@@ -224,21 +264,23 @@ public class SignUpFragment extends Fragment {
 
 
             else {
-                loading.setVisibility(View.VISIBLE);
                 RawnaqApiConfig.getCallingAPIInterface().Register(
                         phoneStr, nameStr, emailStr, passwordStr, accountTypeValue,
                         new Callback<UserResponse>() {
                             @Override
                             public void success(UserResponse userResponse, Response response) {
-                                loading.setVisibility(View.GONE);
                                 int status = userResponse.status;
                                 if (status == 200) {
+                                    clearStack();
+
                                     if (userResponse.user != null) {
                                         User myUser = userResponse.user;
                                         sessionManager.setUserToken(myUser.apiToken);
                                         sessionManager.setUserMail(myUser.email);
                                         sessionManager.setUserName(myUser.name);
                                         sessionManager.setUserPhone(myUser.phone);
+                                        MainActivity.providerContainer.setVisibility(View.GONE);
+                                        MainActivity.userContainer.setVisibility(View.VISIBLE);
                                     } else if (userResponse.provider != null) {
                                         Provider myProvider = userResponse.provider;
                                         sessionManager.setProviderId(myProvider.id);
@@ -247,13 +289,39 @@ public class SignUpFragment extends Fragment {
                                         sessionManager.setUserName(myProvider.name);
                                         sessionManager.setUserPhone(myProvider.phone);
                                         sessionManager.setProvider();
+                                        MainActivity.providerContainer.setVisibility(View.VISIBLE);
+                                        MainActivity.userContainer.setVisibility(View.GONE);
                                     }
+
+
+                                    String firstName = sessionManager.getUserName().split(" ")[0];
+                                    if (firstName.length() > 10)
+                                        MainActivity.userName.setText(getString(R.string.welcomeUser) + ":  " + firstName.substring(0, 10));
+                                    else
+                                        MainActivity.userName.setText(getString(R.string.welcomeUser) + ":  " + firstName);
+
 
                                     if (sessionManager.isGuest()) {
                                         sessionManager.guestLogout();
                                     }
                                     sessionManager.LoginSession();
-                                    Navigator.loadFragment(activity, ValidationCodeFragment.newInstance(activity,false), R.id.main_fl_container, false);
+                                    Navigator.loadFragment(activity, ValidationCodeFragment.newInstance(activity, false), R.id.main_fl_container, false);
+
+                                    FirebaseInstanceId.getInstance().getInstanceId()
+                                            .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                    if (!task.isSuccessful()) {
+                                                        Log.w("login", "getInstanceId failed", task.getException());
+                                                        return;
+                                                    }
+
+                                                    // Get new Instance ID token
+                                                    regId = task.getResult().getToken();
+                                                    Log.e("registerationid Splash ", "regid -> " + regId);
+                                                    registerFirebaseTokenApi();
+                                                }
+                                            });
 
                                 } else if (status == 409) {
                                     Snackbar.make(loading, getString(R.string.emailExisted), Snackbar.LENGTH_SHORT).show();
@@ -264,7 +332,6 @@ public class SignUpFragment extends Fragment {
 
                             @Override
                             public void failure(RetrofitError error) {
-                                loading.setVisibility(View.GONE);
                                 Snackbar.make(loading, getString(R.string.error), Snackbar.LENGTH_SHORT).show();
 
                             }
@@ -285,5 +352,34 @@ public class SignUpFragment extends Fragment {
         activity.onBackPressed();
     }
 
+    @OnClick(R.id.fragment_sign_up_tv_agreeTxt)
+    public void agreeTxtClick() {
+        Navigator.loadFragment(activity, TermsFragment.newInstance(activity), R.id.main_fl_container, true);
+    }
 
+    private void registerFirebaseTokenApi() {
+        RawnaqApiConfig.getCallingAPIInterface().registerFirebaseToken(sessionManager.getUserToken(), regId,
+                new Callback<GeneralResponse>() {
+                    @Override
+                    public void success(GeneralResponse generalResponse, Response response) {
+                        if (generalResponse.status == 200) {
+                            sessionManager.setRegId(regId);
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+
+                });
+
+    }
+
+    private void clearStack() {
+        FragmentManager fm = activity.getSupportFragmentManager();
+        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
+    }
 }

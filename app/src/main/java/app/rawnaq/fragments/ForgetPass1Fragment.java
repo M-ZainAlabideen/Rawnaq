@@ -3,6 +3,7 @@ package app.rawnaq.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 import app.rawnaq.MainActivity;
 import app.rawnaq.R;
+import app.rawnaq.classes.FixControl;
 import app.rawnaq.classes.Navigator;
 import app.rawnaq.classes.SessionManager;
 import app.rawnaq.webservices.RawnaqApiConfig;
@@ -32,6 +34,8 @@ public class ForgetPass1Fragment extends Fragment {
     public static ForgetPass1Fragment fragment;
     public static SessionManager sessionManager;
 
+    @BindView(R.id.fragment_forget_pass1_cl_container)
+    ConstraintLayout container;
     @BindView(R.id.fragment_forget_pass1_et_phone)
     EditText phone;
     @BindView(R.id.loading)
@@ -56,6 +60,8 @@ public class ForgetPass1Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.GONE);
+        FixControl.setupUI(container,activity);
+
     }
 
     @OnClick(R.id.fragment_forget_pass1_btn_send)

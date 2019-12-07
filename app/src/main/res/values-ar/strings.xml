@@ -110,11 +110,11 @@
     <string name="noOrders">لا يوجد طلبات لعرضها</string>
     <string name="shopName">الإسم التجاري لمقدم الخدمة</string>
     <string name="phoneForContact">جوال أو هاتف التواصل معك</string>
-    <string name="brief">نبذة عن مقدم الخدمة</string>
+    <string name="brief">نبذة عنك </string>
     <string name="addImages">اضف صور</string>
     <string name="streetName">إسم الشارع</string>
     <string name="workHours">ساعات العمل</string>
-    <string name="enterHomeCost">ادخل السعر المضاف لسعر الخدمة في المنزل</string>
+    <string name="enterHomeCost">ادخل سعر الخدمة في المنزل</string>
     <string name="saveYourData">سوف نقوم بحفظ موقعك بإستخدام خاصية الجي بي إس بهاتفك لعرضها للمستخدمين علي الخريطة</string>
     <string name="saveMainData">حفظ البيانات الأساسية</string>
     <string name="mainCategory">التصنيف الرئيسي</string>
@@ -163,6 +163,8 @@
     <string name="welcomeUser">مرحبا</string>
     <string name="loginFirst">قم بإنشاء حساب أو تسجيل الدخول أولا</string>
     <string name="noFavorites">قائمة المفضلة فارغة</string>
+    <string name="home">الرئيسية</string>
+    <string name="serviceDeletedSuccessfully">تم الغاء الخدمة بنجاح</string>
 
 
     <string-array name="days">
