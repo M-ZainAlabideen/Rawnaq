@@ -16,21 +16,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:scaleType="centerCrop"
-        app:srcCompat="@mipmap/rawnaq_bg" />
+        app:srcCompat="@drawable/rawnaq_bg" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/rawnaq_logo" />
+
 
     <TextView
         android:id="@+id/textView"
@@ -41,32 +29,52 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="50dp"
-        android:text="@string/recover_pass"
+        android:text="@string/recoverPass"
         android:textColor="@color/white"
         android:fontFamily="@font/droid_kufi_bold"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_forget_pass1_et_phone"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_forget_pass1_ll_phoneContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/fragment_forget_pass1_et_phone"
+
+    <LinearLayout
+        android:id="@+id/fragment_forget_pass1_ll_phoneContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="35dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:inputType="phone"
-        android:hint="@string/phone"
-        android:textAlignment="viewStart"
-        android:padding="7dp"
         android:background="@drawable/curved_corners_white"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+            android:id="@+id/fragment_forget_pass1_ccp_countryCode"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/droid_kufi_regular"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            app:ccp_defaultCode="966"
+            app:ccp_defaultNameCode="SA"
+            app:ccp_hideNameCode="true"
+            app:ccp_textSize="14sp" />
+
+        <EditText
+            android:id="@+id/fragment_forget_pass1_et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:ems="10"
+            android:hint="@string/phone"
+            android:inputType="phone"
+            android:padding="7dp"
+            android:textAlignment="viewStart" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/fragment_forget_pass1_btn_send"
@@ -82,7 +90,7 @@
         android:padding="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_forget_pass1_et_phone" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_forget_pass1_ll_phoneContainer" />
 
 
     <ProgressBar

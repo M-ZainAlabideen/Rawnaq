@@ -61,8 +61,6 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, 3000);
 
-        FirebaseApp.initializeApp(this);
-
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override

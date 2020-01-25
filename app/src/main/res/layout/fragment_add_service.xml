@@ -70,7 +70,7 @@
 
         <RadioGroup
             android:id="@+id/fragment_add_service_rg_serviceFor"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:orientation="horizontal"

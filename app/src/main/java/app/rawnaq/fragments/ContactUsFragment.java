@@ -74,6 +74,7 @@ public class ContactUsFragment extends Fragment {
         MainActivity.back.setVisibility(View.VISIBLE);
         FixControl.setupUI(container,activity);
         MainActivity.title.setText(getString(R.string.contactUs));
+        GlobalFunctions.appInfoApi();
 
         sessionManager = new SessionManager(activity);
         phoneContact.setText(GlobalFunctions.appPhone);
@@ -128,7 +129,7 @@ public class ContactUsFragment extends Fragment {
 
     private void contactApi(final String name, String phone, String mail, String message) {
         loading.setVisibility(View.VISIBLE);
-        RawnaqApiConfig.getCallingAPIInterface().Contact(name, phone, mail, message, new Callback<GeneralResponse>() {
+        RawnaqApiConfig.getCallingAPIInterface().Contact(name, phone, mail,"title", message, new Callback<GeneralResponse>() {
             @Override
             public void success(GeneralResponse generalResponse, Response response) {
                 loading.setVisibility(View.GONE);

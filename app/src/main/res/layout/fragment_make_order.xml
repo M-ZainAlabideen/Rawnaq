@@ -29,7 +29,7 @@
             android:id="@+id/fragment_make_order_iv_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="@+id/fragment_make_order_tv_name"
             app:layout_constraintTop_toBottomOf="@+id/fragment_make_order_tv_name"
             app:srcCompat="@mipmap/ic_location" />
@@ -92,11 +92,11 @@
             android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:background="@color/blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_make_order_iv_workFromHome" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_make_order_iv_location" />
 
     <TextView
         android:id="@+id/textView19"
@@ -144,7 +144,7 @@
             android:button="@drawable/checkbox_white_selector"
             android:padding="6dp"
             android:buttonTint="@color/gray"
-            android:text="@string/home_service"
+            android:text="@string/homeService"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view3" />
@@ -154,7 +154,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/home_cost"
+        android:text="@string/homeCost"
         android:textColor="@color/orange"
         app:layout_constraintStart_toStartOf="@+id/fragment_make_order_cb_homeRequest"
         app:layout_constraintTop_toBottomOf="@+id/fragment_make_order_cb_homeRequest" />
@@ -186,7 +186,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/select_address"
+        android:text="@string/selectAddress"
         android:textColor="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.513"
@@ -230,7 +230,7 @@
             android:background="@mipmap/bg_reservation"
             android:gravity="center"
             android:paddingBottom="4dp"
-            android:text="@string/send_order"
+            android:text="@string/sendOrder"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

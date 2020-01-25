@@ -18,36 +18,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@mipmap/rawnaq_bg" />
+        app:srcCompat="@drawable/rawnaq_bg" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/rawnaq_logo" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginTop="250dp"
         android:fontFamily="@font/droid_kufi_bold"
-        android:text="@string/recover_pass"
+        android:text="@string/recoverPass"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/fragment_forget_pass2_et_code"
@@ -89,7 +76,7 @@
         android:layout_marginTop="18dp"
         android:background="@drawable/curved_corners_white"
         android:ems="10"
-        android:hint="@string/confirm_password"
+        android:hint="@string/confirmPassword"
         android:inputType="textPassword"
         android:padding="7dp"
         android:textAlignment="viewStart"
@@ -121,7 +108,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="24dp"
-        android:text="@string/code_sent"
+        android:text="@string/codeSent"
         android:gravity="center"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"

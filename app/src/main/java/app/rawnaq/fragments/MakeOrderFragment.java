@@ -183,10 +183,10 @@ public class MakeOrderFragment extends Fragment {
             workFromHomeTV.setVisibility(View.GONE);
         }
         if (favorite) {
-            addToFav.setImageResource(R.mipmap.ic_fav);
+            addToFav.setImageResource(R.drawable.ic_fav);
         }
         rating.setRating((float) ratingValue);
-        homeServicePrice.setText(getString(R.string.home_cost).replace(getString(R.string.fifty), homePrice));
+        homeServicePrice.setText(getString(R.string.homeCost).replace(getString(R.string.fifty), homePrice));
     }
 
     private void getLocation() {
@@ -216,10 +216,12 @@ public class MakeOrderFragment extends Fragment {
                         int status = generalResponse.status;
                         if (status == 200) {
                             if (addToFav.getDrawable().getConstantState() ==
-                                    getResources().getDrawable(R.mipmap.ic_fav).getConstantState()) {
+                                    getResources().getDrawable(R.drawable.ic_fav).getConstantState()) {
                                 addToFav.setImageResource(R.mipmap.ic_un_fav);
+                                provider.providerShop.fav = false;
                             } else {
-                                addToFav.setImageResource(R.mipmap.ic_fav);
+                                addToFav.setImageResource(R.drawable.ic_fav);
+                                provider.providerShop.fav = true;
                             }
                         }
                     }

@@ -50,6 +50,7 @@ public class AboutUsFragment extends Fragment {
         MainActivity.appbar.setVisibility(View.VISIBLE);
         MainActivity.back.setVisibility(View.VISIBLE);
         MainActivity.title.setText(getString(R.string.aboutsUs));
+        GlobalFunctions.appInfoApi();
         aboutApp.setText(GlobalFunctions.aboutApp);
         AppFeatures.setText(GlobalFunctions.featureList);
     }

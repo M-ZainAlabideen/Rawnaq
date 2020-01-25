@@ -20,11 +20,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.rilixtech.widget.countrycodepicker.Country;
+import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import app.rawnaq.MainActivity;
 import app.rawnaq.R;
@@ -43,6 +46,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+
 public class SignUpFragment extends Fragment {
     public static FragmentActivity activity;
     public static SignUpFragment fragment;
@@ -56,6 +60,8 @@ public class SignUpFragment extends Fragment {
     EditText email;
     @BindView(R.id.fragment_sign_up_et_phone)
     EditText phone;
+    @BindView(R.id.fragment_sign_up_ccp_countryCode)
+    CountryCodePicker countryCode;
     @BindView(R.id.fragment_sign_up_et_password)
     EditText password;
     @BindView(R.id.fragment_sign_up_et_confirmPassword)
@@ -81,7 +87,8 @@ public class SignUpFragment extends Fragment {
     @BindView(R.id.loading)
     ProgressBar loading;
 
-    String regId = "";
+    private String regId = "";
+    private String totalPhoneNumber;
 
     public static SignUpFragment newInstance(FragmentActivity activity, String comingFrom) {
         fragment = new SignUpFragment();
@@ -105,7 +112,7 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.GONE);
-        FixControl.setupUI(container,activity);
+        FixControl.setupUI(container, activity);
         if (getArguments().getString("comingFrom").equals("update")) {
             serviceProvider.setVisibility(View.INVISIBLE);
             user.setVisibility(View.INVISIBLE);
@@ -121,7 +128,6 @@ public class SignUpFragment extends Fragment {
             name.setText(sessionManager.getUserName());
             phone.setText(sessionManager.getUserPhone());
             email.setText(sessionManager.getUserMail());
-
         }
         serviceProvider.setOnCheckedChangeListener(radioCheckListener);
         user.setOnCheckedChangeListener(radioCheckListener);
@@ -162,13 +168,17 @@ public class SignUpFragment extends Fragment {
                 Snackbar.make(loading, getString(R.string.enterEmail), Snackbar.LENGTH_SHORT).show();
             else {
                 loading.setVisibility(View.VISIBLE);
+
+                totalPhoneNumber = countryCode.getSelectedCountryCodeWithPlus() + phoneStr;
+                Log.d("RAWNAQAPP",totalPhoneNumber);
+
                 RawnaqApiConfig.getCallingAPIInterface().updateProfile(
-                        sessionManager.getUserToken(), nameStr, phoneStr, emailStr, null,
+                        sessionManager.getUserToken(), nameStr, totalPhoneNumber, emailStr, null,
                         new Callback<UserResponse>() {
                             @Override
                             public void success(UserResponse userResponse, Response response) {
                                 loading.setVisibility(View.GONE);
-                                if (!sessionManager.getUserPhone().equals(phoneStr)) {
+                                if (!sessionManager.getUserPhone().equals(totalPhoneNumber)) {
                                     Navigator.loadFragment(activity, ValidationCodeFragment.newInstance(activity, true), R.id.main_fl_container, false);
                                 } else {
                                     Snackbar.make(loading, getString(R.string.updatedSuccessfully), Snackbar.LENGTH_SHORT).show();
@@ -191,12 +201,6 @@ public class SignUpFragment extends Fragment {
 
                                 }
 
-
-                                String firstName = sessionManager.getUserName().split(" ")[0];
-                                if (firstName.length() > 10)
-                                    MainActivity.userName.setText(getString(R.string.welcomeUser) + ":  " + firstName.substring(0, 10));
-                                else
-                                    MainActivity.userName.setText(getString(R.string.welcomeUser) + ":  " + firstName);
 
                                 FirebaseInstanceId.getInstance().getInstanceId()
                                         .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
@@ -264,23 +268,27 @@ public class SignUpFragment extends Fragment {
 
 
             else {
+                loading.setVisibility(View.VISIBLE);
+                //countryCode.getSelectedCountryCodeWithPlus() +
+                totalPhoneNumber =  phoneStr;
+                Log.d("RAWNAQAPP",totalPhoneNumber);
                 RawnaqApiConfig.getCallingAPIInterface().Register(
-                        phoneStr, nameStr, emailStr, passwordStr, accountTypeValue,
+                        totalPhoneNumber, nameStr, emailStr, passwordStr, accountTypeValue,
                         new Callback<UserResponse>() {
                             @Override
                             public void success(UserResponse userResponse, Response response) {
                                 int status = userResponse.status;
                                 if (status == 200) {
                                     clearStack();
-
+                                    loading.setVisibility(View.GONE);
                                     if (userResponse.user != null) {
                                         User myUser = userResponse.user;
                                         sessionManager.setUserToken(myUser.apiToken);
                                         sessionManager.setUserMail(myUser.email);
                                         sessionManager.setUserName(myUser.name);
                                         sessionManager.setUserPhone(myUser.phone);
-                                        MainActivity.providerContainer.setVisibility(View.GONE);
-                                        MainActivity.userContainer.setVisibility(View.VISIBLE);
+
+
                                     } else if (userResponse.provider != null) {
                                         Provider myProvider = userResponse.provider;
                                         sessionManager.setProviderId(myProvider.id);
@@ -289,22 +297,27 @@ public class SignUpFragment extends Fragment {
                                         sessionManager.setUserName(myProvider.name);
                                         sessionManager.setUserPhone(myProvider.phone);
                                         sessionManager.setProvider();
-                                        MainActivity.providerContainer.setVisibility(View.VISIBLE);
-                                        MainActivity.userContainer.setVisibility(View.GONE);
+
                                     }
-
-
-                                    String firstName = sessionManager.getUserName().split(" ")[0];
-                                    if (firstName.length() > 10)
-                                        MainActivity.userName.setText(getString(R.string.welcomeUser) + ":  " + firstName.substring(0, 10));
-                                    else
-                                        MainActivity.userName.setText(getString(R.string.welcomeUser) + ":  " + firstName);
-
 
                                     if (sessionManager.isGuest()) {
                                         sessionManager.guestLogout();
                                     }
                                     sessionManager.LoginSession();
+                                    if (sessionManager.isProvider()) {
+                                        MainActivity.providerContainer.setVisibility(View.VISIBLE);
+                                        MainActivity.userContainer.setVisibility(View.GONE);
+                                    } else {
+                                        MainActivity.providerContainer.setVisibility(View.GONE);
+                                        MainActivity.userContainer.setVisibility(View.VISIBLE);
+                                    }
+                                    MainActivity.favorites.setVisibility(View.VISIBLE);
+                                    MainActivity.myOrders.setVisibility(View.VISIBLE);
+                                    MainActivity.logout.setVisibility(View.VISIBLE);
+
+                                    MainActivity.accountOrLoginTxt.setText(getString(R.string.myAccount));
+                                    MainActivity.providerAccountOrLoginTxt.setText(getString(R.string.myAccount));
+
                                     Navigator.loadFragment(activity, ValidationCodeFragment.newInstance(activity, false), R.id.main_fl_container, false);
 
                                     FirebaseInstanceId.getInstance().getInstanceId()

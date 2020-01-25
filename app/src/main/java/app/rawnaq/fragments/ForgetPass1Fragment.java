@@ -7,11 +7,15 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+
+import com.rilixtech.widget.countrycodepicker.Country;
+import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import java.util.Map;
 
@@ -33,11 +37,14 @@ public class ForgetPass1Fragment extends Fragment {
     public static FragmentActivity activity;
     public static ForgetPass1Fragment fragment;
     public static SessionManager sessionManager;
+    private String totalPhoneNumber;
 
     @BindView(R.id.fragment_forget_pass1_cl_container)
     ConstraintLayout container;
     @BindView(R.id.fragment_forget_pass1_et_phone)
     EditText phone;
+    @BindView(R.id.fragment_forget_pass1_ccp_countryCode)
+    CountryCodePicker countryCode;
     @BindView(R.id.loading)
     ProgressBar loading;
 
@@ -71,7 +78,9 @@ public class ForgetPass1Fragment extends Fragment {
             Snackbar.make(loading,getString(R.string.enterPhone),Snackbar.LENGTH_SHORT).show();
         }
         else{
-            forgetPasswordApi(phoneStr);
+            totalPhoneNumber = countryCode.getSelectedCountryCodeWithPlus() + phoneStr;
+            Log.d("RAWNAQAPP",totalPhoneNumber);
+            forgetPasswordApi(totalPhoneNumber);
         }
     }
 

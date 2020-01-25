@@ -3,20 +3,20 @@
     <string name="app_name">رونق</string>
     <string name="navigation_drawer_open" translatable="false">drawer_open</string>
     <string name="navigation_drawer_close" translatable="false">drawer_close</string>
-    <string name="recover_pass">إستعادة كلمة المرور</string>
+    <string name="recoverPass">إستعادة كلمة المرور</string>
     <string name="send">إرسال</string>
     <string name="phone">الجوال</string>
     <string name="code">كود التحقق</string>
     <string name="password">كلمة المرور</string>
-    <string name="confirm_password">تاكيد كلمة المرور</string>
-    <string name="code_sent">  لقد تم إرسال كود التحقق علي جوالك \n
+    <string name="confirmPassword">تاكيد كلمة المرور</string>
+    <string name="codeSent">  لقد تم إرسال كود التحقق علي جوالك \n
         برجاء إدخال كود التحقق وكلمة المرور الجديدة</string>
-    <string name="app_service">التطبيق يقدم خدمته لكي ولك</string>
+    <string name="appService">التطبيق يقدم خدمته لكي ولك</string>
     <string name="login">تسجيل الدخول</string>
-    <string name="forget_pass">نسيت كلمة المرور؟</string>
-    <string name="without_register">تصفح بدون تسجيل</string>
-    <string name="sign_up">تسجيل مستخدم جديد</string>
-    <string name="new_user">مستخدم جديد</string>
+    <string name="forgetPass">نسيت كلمة المرور؟</string>
+    <string name="withoutRegister">تصفح بدون تسجيل</string>
+    <string name="signUp">تسجيل مستخدم جديد</string>
+    <string name="newUser">مستخدم جديد</string>
     <string name="name">الإسم</string>
     <string name="email">البريد الإلكتروني</string>
     <string name="user">مستخدم</string>
@@ -25,7 +25,7 @@
     <string name="agree">أوافق علي سياسة الإستخدام</string>
     <string name="test_serviceName">العناية بأسنان</string>
     <string name="test_serviceDescription">العناية بالأسنان و صحتهاو كل ما يخص صحة الأسنان</string>
-    <string name="advanced_search">بحث متقدم</string>
+    <string name="advancedSearch">بحث متقدم</string>
     <string name="closestToMe">الأقرب لي</string>
     <string name="rating">الأعلي تقييما</string>
     <string name="offers">العروض</string>
@@ -34,19 +34,17 @@
     <string name="test_serviceProviderName">كوافير حريمي</string>
     <string name="test_serviceProviderAddress">جدة بجوار مول جدة الرئيسي</string>
     <string name="search">بحث</string>
-    <string name="rating_of">تقييمات مستخدمي</string>
+    <string name="ratingOf">تقييمات مستخدمي</string>
     <string name="rating2">تقييم ورأي</string>
-    <string name="reserve_now">احجز موعدالآن</string>
-    <string name="home_cost">يضاف مبلغ ٥٠ ريال إضافي مقابل تقديم الخدمة في المنزل</string>
-    <string name="contact_with">تواصل مع</string>
+    <string name="orderNow">احجز موعدالآن</string>
+    <string name="homeCost">يضاف مبلغ ٥٠ ريال إضافي مقابل تقديم الخدمة في المنزل</string>
+    <string name="contactWith">تواصل مع</string>
     <string name="select_service">إختر من خدمات</string>
-    <string name="select_address">إختر التاريخ المناسب لك</string>
+    <string name="selectAddress">إختر التاريخ المناسب لك</string>
     <string name="notes">ملاحظات علي الطلب</string>
-    <string name="send_order">إرسال الطلب</string>
-    <string name="home_service">أريد الخدمة في المنزل</string>
-    <string name="at_home">في المنزل</string>
-    <string name="canel_reservation">إلغاء الطلب</string>
-    <string name="edit_reserve">تعديل الطلب</string>
+    <string name="sendOrder">إرسال الطلب</string>
+    <string name="homeService">أريد الخدمة في المنزل</string>
+    <string name="atHome">في المنزل</string>
     <string name="test_title">العنوان</string>
     <string name="myAccount">بياناتي</string>
     <string name="myOrders">طلباتي</string>
@@ -165,6 +163,10 @@
     <string name="noFavorites">قائمة المفضلة فارغة</string>
     <string name="home">الرئيسية</string>
     <string name="serviceDeletedSuccessfully">تم الغاء الخدمة بنجاح</string>
+    <string name="resendCode">إعادة إرسال الكود ؟</string>
+    <string name="codeResentSuccessfully">تم إعادة إرسال كود التحقق بنجاح علي جوالك</string>
+    <string name="currentOrders">الطلبات الحالية</string>
+    <string name="selectDay">قم بإختيار اليوم أولا</string>
 
 
     <string-array name="days">

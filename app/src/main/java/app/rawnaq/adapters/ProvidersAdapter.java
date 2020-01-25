@@ -78,7 +78,6 @@ public class ProvidersAdapter extends RecyclerView.Adapter<ProvidersAdapter.view
             ArrayList<Image> images = serviceProvidersList.get(position).providerShop.images;
             String city = serviceProvidersList.get(position).providerShop.city.name;
             String zone = serviceProvidersList.get(position).providerShop.zone.name;
-            String street = serviceProvidersList.get(position).providerShop.street;
             double ratingValue = serviceProvidersList.get(position).providerShop.rate;
             int workFromHome = serviceProvidersList.get(position).providerShop.workFromHome;
             boolean favorite = serviceProvidersList.get(position).providerShop.fav;
@@ -106,7 +105,7 @@ public class ProvidersAdapter extends RecyclerView.Adapter<ProvidersAdapter.view
                     viewHolder.name.setText(shopName);
                 }
             }
-            if (city != null && !city.isEmpty() && zone != null && !zone.isEmpty() && street != null && !street.isEmpty()) {
+            if (city != null && !city.isEmpty() && zone != null && !zone.isEmpty() ) {
                 viewHolder.address.setText(city + "| " + zone);
             }
 
@@ -117,7 +116,7 @@ public class ProvidersAdapter extends RecyclerView.Adapter<ProvidersAdapter.view
             }
 
             if (favorite) {
-                viewHolder.addToFav.setImageResource(R.mipmap.ic_fav);
+                viewHolder.addToFav.setImageResource(R.drawable.ic_fav);
             }
             viewHolder.image.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -125,7 +124,7 @@ public class ProvidersAdapter extends RecyclerView.Adapter<ProvidersAdapter.view
 
                     ProviderInfoFragment fragment = ProviderInfoFragment.newInstance((FragmentActivity) context);
                     Bundle b = new Bundle();
-                    b.putInt("providerId", serviceProvidersList.get(position).id);
+                    b.putSerializable("provider", serviceProvidersList.get(position));
                     fragment.setArguments(b);
                     Navigator.loadFragment((FragmentActivity) context, fragment, R.id.main_fl_container, true);
                 }

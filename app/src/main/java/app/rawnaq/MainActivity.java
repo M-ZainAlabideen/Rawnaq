@@ -38,6 +38,7 @@ import app.rawnaq.fragments.ProviderInfoFragment;
 import app.rawnaq.fragments.ProviderServicesFragment;
 import app.rawnaq.fragments.SignUpFragment;
 import app.rawnaq.fragments.TermsFragment;
+import app.rawnaq.fragments.ValidationCodeFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -68,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
     public static ImageView back;
     public static LinearLayout favorites;
     public static LinearLayout myOrders;
-    public static TextView userName;
     public static LinearLayout logout;
 
     private String language;
@@ -109,14 +109,7 @@ public class MainActivity extends AppCompatActivity {
         back = (ImageView) findViewById(R.id.main_iv_back);
         favorites = (LinearLayout) findViewById(R.id.main_ll_favorites);
         myOrders = (LinearLayout) findViewById(R.id.main_ll_myOrders);
-        userName = (TextView) findViewById(R.id.main_tv_userName);
         logout = (LinearLayout) findViewById(R.id.main_ll_logout);
-
-        String firstName = sessionManager.getUserName().split(" ")[0];
-        if (firstName.length() > 10)
-            userName.setText(getString(R.string.welcomeUser) + ":  " + firstName.substring(0, 10));
-        else
-            userName.setText(getString(R.string.welcomeUser) + ":  " + firstName);
 
         GlobalFunctions.appInfoApi();
 
@@ -130,8 +123,9 @@ public class MainActivity extends AppCompatActivity {
                 favorites.setVisibility(View.GONE);
                 myOrders.setVisibility(View.GONE);
                 logout.setVisibility(View.GONE);
-            }
-            else {
+            } else {
+                favorites.setVisibility(View.VISIBLE);
+                myOrders.setVisibility(View.VISIBLE);
                 logout.setVisibility(View.VISIBLE);
             }
         }
@@ -144,17 +138,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        if (sessionManager.isLoggedIn() || sessionManager.isGuest()) {
-            if (sessionManager.isProvider()) {
-                if (sessionManager.hasShop()) {
-                    //fix it
-                    Navigator.loadFragment(this, CurrentOrdersFragment.newInstance(this, "waiting"), R.id.main_fl_container, false);
-                } else {
-                    Navigator.loadFragment(this, HomeFragment.newInstance(this), R.id.main_fl_container, false);
-                }
+        if (sessionManager.isLoggedIn()) {
+            if (!sessionManager.isValidation()) {
+                Navigator.loadFragment(this, LoginFragment.newInstance(this), R.id.main_fl_container, false);
             } else {
-                Navigator.loadFragment(this, CategoriesFragment.newInstance(this), R.id.main_fl_container, false);
+                if (sessionManager.isProvider()) {
+                    if (sessionManager.hasShop()) {
+                        Navigator.loadFragment(this, CurrentOrdersFragment.newInstance(this, "providerWait"), R.id.main_fl_container, false);
+                    } else {
+                        Navigator.loadFragment(this, HomeFragment.newInstance(this), R.id.main_fl_container, false);
+                    }
+                } else {
+                    Navigator.loadFragment(this, CategoriesFragment.newInstance(this), R.id.main_fl_container, false);
+                }
             }
+        } else if (sessionManager.isGuest()) {
+            Navigator.loadFragment(this, CategoriesFragment.newInstance(this), R.id.main_fl_container, false);
         } else {
             Navigator.loadFragment(this, LoginFragment.newInstance(this), R.id.main_fl_container, false);
         }
@@ -192,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.main_ll_accountOrLogin)
     public void accountClick() {
         if (accountOrLoginTxt.getText().toString().equals(getString(R.string.login))) {
-            Navigator.loadFragment(this, LoginFragment.newInstance(this), R.id.main_fl_container, true);
+            Navigator.loadFragment(this, LoginFragment.newInstance(this), R.id.main_fl_container, false);
         } else {
             Navigator.loadFragment(this, SignUpFragment.newInstance(this, "update"), R.id.main_fl_container, true);
         }
@@ -226,6 +225,12 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.main_ll_myServices)
     public void myServicesClick() {
         Navigator.loadFragment(this, ProviderServicesFragment.newInstance(this), R.id.main_fl_container, true);
+        drawerLayout.closeDrawers();
+    }
+
+    @OnClick(R.id.main_ll_providerCurrentOrders)
+    public void providerCurrentOrdersClick() {
+        Navigator.loadFragment(this, CurrentOrdersFragment.newInstance(this, "providerWait"), R.id.main_fl_container, false);
         drawerLayout.closeDrawers();
     }
 

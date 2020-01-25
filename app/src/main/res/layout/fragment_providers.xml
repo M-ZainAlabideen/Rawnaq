@@ -281,7 +281,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="@string/advanced_search"
+            android:text="@string/advancedSearch"
             android:textColor="@color/blue"
             app:layout_constraintBottom_toBottomOf="@+id/fragment_providers_iv_arrow"
             app:layout_constraintStart_toEndOf="@+id/fragment_providers_iv_arrow"

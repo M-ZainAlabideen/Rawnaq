@@ -14,11 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.rilixtech.widget.countrycodepicker.Country;
+import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import java.util.Map;
 
@@ -39,16 +42,20 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+
 public class LoginFragment extends Fragment {
     public static FragmentActivity activity;
     public static LoginFragment fragment;
     public static SessionManager sessionManager;
     private String regId = "";
+    private String totalPhoneNumber;
 
     @BindView(R.id.fragment_login_cl_container)
     ConstraintLayout container;
     @BindView(R.id.fragment_login_et_phone)
     EditText phone;
+    @BindView(R.id.fragment_login_ccp_countryCode)
+    CountryCodePicker countryCode;
     @BindView(R.id.fragment_login_et_password)
     EditText password;
     @BindView(R.id.loading)
@@ -73,7 +80,7 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.GONE);
-        FixControl.setupUI(container,activity);
+        FixControl.setupUI(container, activity);
     }
 
     @OnClick(R.id.fragment_login_btn_login)
@@ -93,15 +100,16 @@ public class LoginFragment extends Fragment {
 
         else {
             loading.setVisibility(View.VISIBLE);
+            totalPhoneNumber = countryCode.getSelectedCountryCodeWithPlus() + phoneStr;
+            Log.d("RAWNAQAPP",totalPhoneNumber);
             RawnaqApiConfig.getCallingAPIInterface().Login(
-                    phoneStr, passwordStr, new Callback<UserResponse>() {
+                    totalPhoneNumber, passwordStr, new Callback<UserResponse>() {
                         @Override
                         public void success(UserResponse userResponse, Response response) {
                             loading.setVisibility(View.GONE);
                             int status = userResponse.status;
                             if (status == 200) {
                                 clearStack();
-
                                 if (userResponse.user != null) {
                                     User myUser = userResponse.user;
                                     sessionManager.setUserToken(myUser.apiToken);
@@ -109,11 +117,7 @@ public class LoginFragment extends Fragment {
                                     sessionManager.setUserName(myUser.name);
                                     sessionManager.setUserPhone(myUser.phone);
 
-                                     if (sessionManager.isValidation()) {
-                                    Navigator.loadFragment(activity, CategoriesFragment.newInstance(activity), R.id.main_fl_container, false);
-                                    } else {
-                                        Navigator.loadFragment(activity, ValidationCodeFragment.newInstance(activity,false), R.id.main_fl_container, false);
-                                    }
+
                                 } else if (userResponse.provider != null) {
                                     Provider myProvider = userResponse.provider;
                                     sessionManager.setProviderId(myProvider.id);
@@ -122,31 +126,27 @@ public class LoginFragment extends Fragment {
                                     sessionManager.setUserName(myProvider.name);
                                     sessionManager.setUserPhone(myProvider.phone);
                                     sessionManager.setProvider();
-
                                     if (myProvider.providerShop != null) {
                                         sessionManager.setShop();
                                     }
-                                      if (sessionManager.isValidation()) {
-                                    if (sessionManager.hasShop()) {
-                                        Navigator.loadFragment(activity, CurrentOrdersFragment.newInstance(activity, "waiting"), R.id.main_fl_container, false);
-                                    } else {
-                                        Navigator.loadFragment(activity, HomeFragment.newInstance(activity), R.id.main_fl_container, false);
-                                    }
-                                    } else {
-                                        Navigator.loadFragment(activity, ValidationCodeFragment.newInstance(activity,false), R.id.main_fl_container, false);
-                                    }
-                                }
-                                String firstName = sessionManager.getUserName().split(" ")[0];
-                                if (firstName.length() > 10)
-                                    MainActivity.userName.setText(getString(R.string.welcomeUser) + ":  " + firstName.substring(0, 10));
-                                else
-                                    MainActivity.userName.setText(getString(R.string.welcomeUser) + ":  " + firstName);
 
-                                if (sessionManager.isGuest()) {
-                                    sessionManager.guestLogout();
                                 }
                                 sessionManager.LoginSession();
+                                sessionManager.setValidation();
+                                if (sessionManager.isProvider()) {
+                                        if (sessionManager.hasShop()) {
+                                            Navigator.loadFragment(activity, CurrentOrdersFragment.newInstance(activity, "providerWait"), R.id.main_fl_container, false);
+                                        } else {
+                                            Navigator.loadFragment(activity, HomeFragment.newInstance(activity), R.id.main_fl_container, false);
+                                        }
 
+                                } else {
+                                        Navigator.loadFragment(activity, CategoriesFragment.newInstance(activity), R.id.main_fl_container, false);
+                                }
+
+                                if(sessionManager.isGuest()){
+                                    sessionManager.guestLogout();
+                                }
                                 if (sessionManager.isProvider()) {
                                     MainActivity.providerContainer.setVisibility(View.VISIBLE);
                                     MainActivity.userContainer.setVisibility(View.GONE);
@@ -154,8 +154,13 @@ public class LoginFragment extends Fragment {
                                     MainActivity.providerContainer.setVisibility(View.GONE);
                                     MainActivity.userContainer.setVisibility(View.VISIBLE);
                                 }
+                                MainActivity.favorites.setVisibility(View.VISIBLE);
+                                MainActivity.myOrders.setVisibility(View.VISIBLE);
+                                MainActivity.logout.setVisibility(View.VISIBLE);
+
                                 MainActivity.accountOrLoginTxt.setText(getString(R.string.myAccount));
                                 MainActivity.providerAccountOrLoginTxt.setText(getString(R.string.myAccount));
+
 
                                 FirebaseInstanceId.getInstance().getInstanceId()
                                         .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
@@ -169,14 +174,18 @@ public class LoginFragment extends Fragment {
                                                 // Get new Instance ID token
                                                 regId = task.getResult().getToken();
 
-                                                Log.e("registerationid Splash ", "regid -> "+regId);
+                                                Log.e("registerationid Splash ", "regid -> " + regId);
 
                                                 registerFirebaseTokenApi();
 
 
                                             }
                                         });
-                            } else if (status == 415) {
+                            }else if(status == 425){
+                                Navigator.loadFragment(activity, ValidationCodeFragment.newInstance(activity, false), R.id.main_fl_container, false);
+                            }
+
+                            else if (status == 415) {
                                 Snackbar.make(loading, getString(R.string.unRegisterPhone), Snackbar.LENGTH_SHORT).show();
                             } else if (status == 410) {
                                 Snackbar.make(loading, getString(R.string.inCorrectPassword), Snackbar.LENGTH_SHORT).show();
@@ -192,6 +201,7 @@ public class LoginFragment extends Fragment {
                     }
             );
         }
+
     }
 
     @OnClick(R.id.fragment_login_tv_signUp)
@@ -207,6 +217,7 @@ public class LoginFragment extends Fragment {
     @OnClick(R.id.fragment_login_tv_guest)
     public void guestClick() {
         sessionManager.ContinueAsGuest();
+        MainActivity.logout.setVisibility(View.GONE);
         Navigator.loadFragment(activity, CategoriesFragment.newInstance(activity), R.id.main_fl_container, false);
     }
 

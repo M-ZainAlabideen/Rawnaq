@@ -54,8 +54,6 @@ public class ProvidersFragment extends Fragment {
     private ArrayList<Provider> providersList = new ArrayList<>();
 
     private List<Country> countriesList = new ArrayList<>();
-    private List<City> citiesList = new ArrayList<>();
-    private List<Zone> zonesList = new ArrayList<>();
 
     private List<String> countriesNamesList = new ArrayList<>();
     private List<String> citiesNamesList = new ArrayList<>();
@@ -145,7 +143,7 @@ public class ProvidersFragment extends Fragment {
                 if (sessionManager.isGuest()) {
                     Snackbar.make(loading, getString(R.string.loginFirst), Snackbar.LENGTH_SHORT).show();
                 } else {
-                    makeFavoriteApi(providersList.get(position).id, addToFav);
+                    makeFavoriteApi(providersList.get(position).id, addToFav, position);
                 }
             }
         });
@@ -180,19 +178,23 @@ public class ProvidersFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 countryPosition = position;
+                cityPosition = 0;
+                zonePosition = 0;
                 citiesNamesList.clear();
                 for (City value : countriesList.get(position).cities) {
                     citiesNamesList.add(value.name);
                 }
                 citiesAdapter.notifyDataSetChanged();
-                citiesList.addAll(countriesList.get(position).cities);
 
                 zonesNamesList.clear();
-                for (Zone value : citiesList.get(position).zones) {
+                for (Zone value : countriesList.get(position).cities.get(0).zones) {
                     zonesNamesList.add(value.name);
                 }
                 zonesAdapter.notifyDataSetChanged();
-                zonesList.addAll(citiesList.get(position).zones);
+
+                citySpin.setSelection(0);
+                zoneSpin.setSelection(0);
+
 
             }
 
@@ -206,13 +208,15 @@ public class ProvidersFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cityPosition = position;
+                zonePosition = 0;
 
                 zonesNamesList.clear();
-                for (Zone value : citiesList.get(position).zones) {
+                for (Zone value : countriesList.get(countryPosition).cities.get(position).zones) {
                     zonesNamesList.add(value.name);
                 }
                 zonesAdapter.notifyDataSetChanged();
-                zonesList.addAll(citiesList.get(position).zones);
+
+                zoneSpin.setSelection(0);
 
             }
 
@@ -348,7 +352,16 @@ public class ProvidersFragment extends Fragment {
         nearestTxt.setTextColor(Color.parseColor("#095B98"));
         highRateTxt.setTextColor(Color.parseColor("#095B98"));
         notifyData();
-        providersSearchApi(countriesList.get(countryPosition).id, citiesList.get(cityPosition).id, zonesList.get(zonePosition).id);
+        int countryId = 0;
+        int cityId = 0;
+        int zoneId = 0;
+
+        if (countriesList.size() != 0) {
+            countryId = countriesList.get(countryPosition).id;
+            cityId = countriesList.get(countryPosition).cities.get(cityPosition).id;
+            zoneId = countriesList.get(countryPosition).cities.get(cityPosition).zones.get(zonePosition).id;
+        }
+        providersSearchApi(countryId, cityId, zoneId);
     }
 
     public void notifyData() {
@@ -367,6 +380,7 @@ public class ProvidersFragment extends Fragment {
         searchContainer.setVisibility(View.GONE);
         searchCheck = false;
     }
+
     private void providersApi(Integer rate, Integer nearBy, Integer discount, Double longitude, Double latitude) {
         loading.setVisibility(View.VISIBLE);
         RawnaqApiConfig.getCallingAPIInterface().provider(
@@ -401,6 +415,7 @@ public class ProvidersFragment extends Fragment {
                 }
         );
     }
+
     public void providersSearchApi(int country, int city, int zone) {
         loading.setVisibility(View.VISIBLE);
         RawnaqApiConfig.getCallingAPIInterface().providerSearch(country, city, zone,
@@ -431,7 +446,8 @@ public class ProvidersFragment extends Fragment {
                 }
         );
     }
-    private void makeFavoriteApi(int providerId, final ImageView addToFav) {
+
+    private void makeFavoriteApi(int providerId, final ImageView addToFav, final int position) {
         loading.setVisibility(View.VISIBLE);
         RawnaqApiConfig.getCallingAPIInterface().makeFavorite(
                 sessionManager.getUserToken(), providerId,
@@ -442,10 +458,13 @@ public class ProvidersFragment extends Fragment {
                         int status = generalResponse.status;
                         if (status == 200) {
                             if (addToFav.getDrawable().getConstantState() ==
-                                    getResources().getDrawable(R.mipmap.ic_fav).getConstantState()) {
+                                    getResources().getDrawable(R.drawable.ic_fav).getConstantState()) {
                                 addToFav.setImageResource(R.mipmap.ic_un_fav);
+                                providersList.get(position).providerShop.fav = false;
                             } else {
-                                addToFav.setImageResource(R.mipmap.ic_fav);
+                                addToFav.setImageResource(R.drawable.ic_fav);
+                                providersList.get(position).providerShop.fav = true;
+
                             }
                         }
                     }
@@ -457,6 +476,7 @@ public class ProvidersFragment extends Fragment {
                 }
         );
     }
+
     public void getCountries() {
         RawnaqApiConfig.getCallingAPIInterface().getCountries(new Callback<CountriesResponse>() {
             @Override
@@ -465,12 +485,29 @@ public class ProvidersFragment extends Fragment {
                 if (status == 200) {
                     if (countriesResponse.country != null) {
                         if (countriesResponse.country.size() > 0) {
+                            countriesList.clear();
+                            countriesList.addAll(countriesResponse.country);
+
                             for (Country value : countriesResponse.country) {
                                 countriesNamesList.add(value.name);
                             }
-                            countriesList.clear();
-                            countriesList.addAll(countriesResponse.country);
                             countriesAdapter.notifyDataSetChanged();
+                            countryPosition = 0;
+
+                            citiesNamesList.clear();
+                            for (City value : countriesList.get(0).cities) {
+                                citiesNamesList.add(value.name);
+                            }
+                            citiesAdapter.notifyDataSetChanged();
+
+                            zonesNamesList.clear();
+                            for (Zone value : countriesList.get(0).cities.get(0).zones) {
+                                zonesNamesList.add(value.name);
+                            }
+                            zonesAdapter.notifyDataSetChanged();
+
+                            cityPosition = 0;
+                            zonePosition = 0;
                         }
                     }
                 }

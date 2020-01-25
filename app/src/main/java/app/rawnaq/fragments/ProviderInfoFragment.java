@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.glide.slider.library.SliderLayout;
@@ -114,7 +115,7 @@ public class ProviderInfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.appbar.setVisibility(View.VISIBLE);
         MainActivity.back.setVisibility(View.VISIBLE);
-
+        loading.setVisibility(View.GONE);
         container.setVisibility(View.GONE);
 
         layoutManager = new GridLayoutManager(activity, 2);
@@ -122,14 +123,13 @@ public class ProviderInfoFragment extends Fragment {
         subServices.setLayoutManager(layoutManager);
         subServices.setAdapter(subServicesAdapter);
 
-        if (provider != null) {
-            loading.setVisibility(View.GONE);
+        //when coming from providersList , pass the data of this provider (no need for downloading again from server)
+        if (getArguments() != null && getArguments().getSerializable("provider") != null) {
+            provider = (Provider) getArguments().getSerializable("provider");
             setData();
         } else {
             ProviderInfoApi();
         }
-
-
     }
 
     @OnClick(R.id.fragment_provider_info_iv_addToFav)
@@ -229,8 +229,8 @@ public class ProviderInfoFragment extends Fragment {
         name.setText(shopName);
         address.setText(city + "| " + zone + "| " + street);
         description.setText(descriptionValue);
-        contactWith.setText(getString(R.string.contact_with) + " " + shopName);
-        ratingOf.setText(getString(R.string.rating_of) + " " + shopName);
+        contactWith.setText(getString(R.string.contactWith) + " " + shopName);
+        ratingOf.setText(getString(R.string.ratingOf) + " " + shopName);
         if (isWorkFromHome != 1) {
             workFromHome.setVisibility(View.INVISIBLE);
             workFromHomeTV.setVisibility(View.INVISIBLE);
@@ -241,7 +241,7 @@ public class ProviderInfoFragment extends Fragment {
         }
         rating.setRating((float) ratingValue);
         ratingCounter.setText(countRate + "");
-        homeServicePrice.setText(getString(R.string.home_cost).replace(getString(R.string.fifty), homePrice));
+        homeServicePrice.setText(getString(R.string.homeCost).replace(getString(R.string.fifty), homePrice));
         if (lat != null && lng != null) {
             getLocation(lat, lng);
         } else {
@@ -250,13 +250,7 @@ public class ProviderInfoFragment extends Fragment {
     }
 
     private void ProviderInfoApi() {
-        int providerId = 0;
-        if (sessionManager.isProvider()) {
-            providerId = sessionManager.getProviderId();
-        } else {
-            providerId = getArguments().getInt("providerId");
-        }
-
+        int providerId = sessionManager.getProviderId();
         RawnaqApiConfig.getCallingAPIInterface().ProviderInfo(
                 providerId,
                 new Callback<ProviderInfoResponse>() {
@@ -285,7 +279,7 @@ public class ProviderInfoFragment extends Fragment {
     private void makeFavoriteApi() {
         loading.setVisibility(View.VISIBLE);
         RawnaqApiConfig.getCallingAPIInterface().makeFavorite(
-                sessionManager.getUserToken(), sessionManager.getProviderId(),
+                sessionManager.getUserToken(), provider.id,
                 new Callback<GeneralResponse>() {
                     @Override
                     public void success(GeneralResponse generalResponse, Response response) {
@@ -293,10 +287,12 @@ public class ProviderInfoFragment extends Fragment {
                         int status = generalResponse.status;
                         if (status == 200) {
                             if (addToFav.getDrawable().getConstantState() ==
-                                    getResources().getDrawable(R.mipmap.ic_fav).getConstantState()) {
+                                    getResources().getDrawable(R.drawable.ic_fav).getConstantState()) {
                                 addToFav.setImageResource(R.mipmap.ic_un_fav);
+                                provider.providerShop.fav = false;
                             } else {
-                                addToFav.setImageResource(R.mipmap.ic_fav);
+                                addToFav.setImageResource(R.drawable.ic_fav);
+                                provider.providerShop.fav = true;
                             }
                         }
                     }

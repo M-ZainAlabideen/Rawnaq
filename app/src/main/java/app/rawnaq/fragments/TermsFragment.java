@@ -50,6 +50,7 @@ public class TermsFragment extends Fragment {
         MainActivity.appbar.setVisibility(View.VISIBLE);
         MainActivity.back.setVisibility(View.VISIBLE);
         MainActivity.title.setText(getString(R.string.terms));
+        GlobalFunctions.appInfoApi();
 
         policyUser.setText(GlobalFunctions.policy_user);
         policyProvider.setText(GlobalFunctions.policy_provider);
